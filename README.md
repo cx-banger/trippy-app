@@ -38,10 +38,12 @@ Tout est enregistré dans le navigateur (localStorage) : likes, votes, messages,
 
 `npm run assets` (ou `node scripts/build-assets.mjs`) régénère `public/images/` :
 - avatars, logos et vignettes **découpés dans les PNG Figma** ;
-- photos de lieux téléchargées depuis **Wikimedia Commons** (licences libres, voir `public/images/CREDITS.md` — les licences CC BY / CC BY-SA demandent de créditer les auteurs si l'appli est publiée).
+- photos de lieux téléchargées depuis **Wikimedia Commons** (licences libres ; auteurs et licences dans `public/images/CREDITS.md` et dans l'appli, MENU › Crédits photos).
 
 Les photos d'origine du Figma avaient du texte incrusté ; pour les remplacer, dépose tes propres fichiers dans `public/images/` avec le même nom.
 
 ## Mise en ligne
 
-`npm run build` produit le dossier `dist/`, à déposer sur Netlify, Vercel ou GitHub Pages (configurer la redirection de toutes les routes vers `index.html`).
+L'appli est publiée sur GitHub Pages : https://cx-banger.github.io/trippy-app/
+
+Chaque push sur  la redéploie automatiquement (workflow , onglet **Actions** du dépôt). Les crédits des photos sont accessibles dans l'appli via **MENU › Crédits photos**.

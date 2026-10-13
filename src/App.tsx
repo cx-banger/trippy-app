@@ -21,7 +21,7 @@ function TabsLayout() {
 export default function App() {
   return (
     <StoreProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <PhoneFrame>
           <Routes>
             <Route element={<TabsLayout />}>

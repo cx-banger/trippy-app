@@ -4,6 +4,7 @@ import { Bell, ChevronDown, Heart, MapPin, Moon, Play, Sun, TrendingUp, X } from
 import { CITIES, TRIPS, type CategoryFilter, type Trip } from '../data'
 import { useStore } from '../store'
 import { CategoryChips, Screen, SearchField, Sheet, TrainIcon, cx } from '../components/ui'
+import CreditsSheet from '../components/Credits'
 
 export default function Home() {
   const { state, setCity, toggleLike, toggleTheme, markNotificationsRead } = useStore()
@@ -13,6 +14,7 @@ export default function Home() {
   const [hotOnly, setHotOnly] = useState(false)
   const [expanded, setExpanded] = useState<string>('biarritz')
   const [menuOpen, setMenuOpen] = useState(false)
+  const [creditsOpen, setCreditsOpen] = useState(false)
   const [cityOpen, setCityOpen] = useState(false)
   const [notifOpen, setNotifOpen] = useState(false)
 
@@ -103,8 +105,18 @@ export default function Home() {
             Thème {state.theme === 'dark' ? 'sombre' : 'clair'}
             {state.theme === 'dark' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
           </button>
+          <button
+            onClick={() => {
+              setMenuOpen(false)
+              setCreditsOpen(true)
+            }}
+            className="rounded-2xl px-4 py-3 text-left text-base text-neutral-500 hover:bg-black/5 dark:hover:bg-white/10"
+          >
+            Crédits photos
+          </button>
         </nav>
       </Sheet>
+      <CreditsSheet open={creditsOpen} onClose={() => setCreditsOpen(false)} />
 
       <Sheet open={cityOpen} onClose={() => setCityOpen(false)}>
         <h2 className="mb-3 font-display text-xl font-semibold">Ta ville de départ</h2>

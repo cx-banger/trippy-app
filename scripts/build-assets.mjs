@@ -62,14 +62,35 @@ async function fetchBuffer(url) {
 
 await mkdir(OUT, { recursive: true })
 
+// Author + licence of a Commons file, for the in-app credits (required by CC BY / CC BY-SA).
+async function commonsInfo(file) {
+  const api = new URL('https://commons.wikimedia.org/w/api.php')
+  api.search = new URLSearchParams({ action: 'query', titles: `File:${file}`, prop: 'imageinfo', iiprop: 'extmetadata', format: 'json' })
+  const res = await fetch(api, { headers: { 'User-Agent': UA } })
+  const page = Object.values((await res.json()).query.pages)[0]
+  const meta = page.imageinfo[0].extmetadata
+  const strip = (html = '') => html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+  return {
+    author: strip(meta.Artist?.value) || 'Auteur inconnu',
+    licence: meta.LicenseShortName?.value,
+    licenceUrl: meta.LicenseUrl?.value,
+    source: `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(file)}`,
+  }
+}
+
 const credits = ['# Crédits photos', '', 'Photos issues de Wikimedia Commons :', '']
-for (const [name, [url, licence]] of Object.entries(photos)) {
+const creditsJson = []
+for (const [name, [url]] of Object.entries(photos)) {
   const buf = await fetchBuffer(url)
   await sharp(buf).resize({ width: 1200, withoutEnlargement: true }).jpeg({ quality: 80, mozjpeg: true }).toFile(path.join(OUT, `${name}.jpg`))
-  credits.push(`- \`${name}.jpg\` — ${licence} — ${decodeURIComponent(url.split('/').slice(-2, -1)[0])}`)
-  console.log('photo', name)
+  const file = decodeURIComponent(url.split('/').slice(-2, -1)[0])
+  const info = await commonsInfo(file)
+  credits.push(`- \`${name}.jpg\` — ${info.author} — ${info.licence} — ${info.source}`)
+  creditsJson.push({ image: `${name}.jpg`, title: file.replace(/\.\w+$/, '').replace(/_/g, ' '), ...info })
+  console.log('photo', name, '—', info.author, info.licence)
 }
 await writeFile(path.join(OUT, 'CREDITS.md'), credits.join('\n') + '\n')
+await writeFile(path.resolve('src/photo-credits.json'), JSON.stringify(creditsJson, null, 2) + '\n')
 
 for (const [name, [file, left, top, width, height]] of Object.entries(crops)) {
   await sharp(path.join(SRC, file)).extract({ left, top, width, height }).png().toFile(path.join(OUT, `${name}.png`))

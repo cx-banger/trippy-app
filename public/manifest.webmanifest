@@ -1,9 +1,9 @@
 {
   "name": "Trippy",
   "short_name": "Trippy",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#F2F2F2",
   "theme_color": "#F2F2F2",
-  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
 }

@@ -1,6 +1,6 @@
 // Sample content for the prototype. Every text and image shown in the app comes from here.
 
-const img = (name: string) => `/images/${name}`
+export const img = (name: string) => `${import.meta.env.BASE_URL}images/${name}`
 
 export type Category = 'PLACES' | 'COUNTRYSIDE' | 'OUTDOOR'
 export const CATEGORIES = ['ALL', 'PLACES', 'COUNTRYSIDE', 'OUTDOOR'] as const

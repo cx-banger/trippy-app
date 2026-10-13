@@ -1,0 +1,74 @@
+[
+  {
+    "image": "biarritz.jpg",
+    "title": "Phare de Biarritz depuis Rocher du Basta",
+    "author": "Christian David",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Phare_de_Biarritz_depuis_Rocher_du_Basta.jpg"
+  },
+  {
+    "image": "marseille.jpg",
+    "title": "Vieux-Port de Marseille, France",
+    "author": "Clément Bardot",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Vieux-Port_de_Marseille%2C_France.jpg"
+  },
+  {
+    "image": "narbonne.jpg",
+    "title": "Mer et plage - Narbonne-Plage",
+    "author": "Florian Pépellin",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mer_et_plage_-_Narbonne-Plage.JPG"
+  },
+  {
+    "image": "rijksmuseum.jpg",
+    "title": "South facade of the Rijksmuseum Amsterdam (DSCF0528)",
+    "author": "Trougnouf (Benoit Brummer)",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:South_facade_of_the_Rijksmuseum_Amsterdam_(DSCF0528).jpg"
+  },
+  {
+    "image": "canal.jpg",
+    "title": "KeizersgrachtReguliersgrachtAmsterdam",
+    "author": "Massimo Catarinella",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KeizersgrachtReguliersgrachtAmsterdam.jpg"
+  },
+  {
+    "image": "paris-boat.jpg",
+    "title": "Boat on the Canal Saint-Martin in 2022",
+    "author": "DiscoA340",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Boat_on_the_Canal_Saint-Martin_in_2022.jpg"
+  },
+  {
+    "image": "forest.jpg",
+    "title": "Forêt domaniale des Fanges (2)",
+    "author": "Lucas Destrem",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:For%C3%AAt_domaniale_des_Fanges_(2).jpg"
+  },
+  {
+    "image": "bali-gate.jpg",
+    "title": "Lempuyang 4",
+    "author": "Slleong",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Lempuyang_4.jpg"
+  },
+  {
+    "image": "bali-palms.jpg",
+    "title": "Bali, rice terraces 9",
+    "author": "Schnobby",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Bali%2C_rice_terraces_9.JPG"
+  }
+]

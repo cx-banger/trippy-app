@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, BadgeCheck, ChartColumn, CheckCheck, Lock, Pin, SendHorizontal, X } from 'lucide-react'
-import { CONTACTS, conversationName, type Conversation, type Message } from '../data'
+import { CONTACTS, conversationName, img, type Conversation, type Message } from '../data'
 import { useStore } from '../store'
 import { cx } from '../components/ui'
 
-const avatars: Record<string, string> = { max: '/images/av-max.png' }
+const avatars: Record<string, string> = { max: img('av-max.png') }
 
 export default function Chat() {
   const { id = '' } = useParams()
