@@ -29,14 +29,21 @@ const initialState: State = {
 
 const STORAGE_KEY = 'trippy-state-v1'
 
-function load(): State {
+// The desktop preview shows each screen in an iframe with ?theme=light|dark, which wins over the saved theme.
+const themeParam = new URLSearchParams(window.location.search).get('theme')
+const forcedTheme = themeParam === 'light' || themeParam === 'dark' ? themeParam : null
+
+function readSaved(): Partial<State> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return initialState
-    return { ...initialState, ...JSON.parse(raw) }
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}')
   } catch {
-    return initialState
+    return {}
   }
+}
+
+function load(): State {
+  const state = { ...initialState, ...readSaved() }
+  return forcedTheme ? { ...state, theme: forcedTheme } : state
 }
 
 const toggle = (list: string[], id: string) => (list.includes(id) ? list.filter((x) => x !== id) : [...list, id])
@@ -48,14 +55,23 @@ function useStoreValue() {
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
-      localStorage.setItem('trippy-theme', state.theme)
+      // a forced theme is local to this frame: keep the saved one untouched
+      const theme = forcedTheme ? (readSaved().theme ?? initialState.theme) : state.theme
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, theme }))
+      if (!forcedTheme) localStorage.setItem('trippy-theme', theme)
     } catch {
       // storage unavailable (private mode) — the app still works for this session
     }
     document.documentElement.classList.toggle('dark', state.theme === 'dark')
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', state.theme === 'dark' ? '#1F1F1F' : '#F2F2F2')
   }, [state])
+
+  // Keep several open copies in sync (the preview phones on desktop, or two tabs)
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => e.key === STORAGE_KEY && setState(load())
+    window.addEventListener('storage', onStorage)
+    return () => window.removeEventListener('storage', onStorage)
+  }, [])
 
   const patch = useCallback((fn: (s: State) => Partial<State>) => setState((s) => ({ ...s, ...fn(s) })), [])
 

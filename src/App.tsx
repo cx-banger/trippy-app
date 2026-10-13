@@ -8,6 +8,14 @@ import Feed from './screens/Feed'
 import Savings from './screens/Savings'
 import Messages from './screens/Messages'
 import Chat from './screens/Chat'
+import DesktopPreview from './DesktopPreview'
+
+// On a computer, show the gallery of phones instead of the app itself.
+// Inside those phones (iframes), or with ?app in the URL, run the app normally.
+const showDesktopPreview =
+  window.self === window.top &&
+  !new URLSearchParams(window.location.search).has('app') &&
+  window.matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)').matches
 
 function TabsLayout() {
   return (
@@ -19,6 +27,7 @@ function TabsLayout() {
 }
 
 export default function App() {
+  if (showDesktopPreview) return <DesktopPreview />
   return (
     <StoreProvider>
       <BrowserRouter basename={import.meta.env.BASE_URL}>

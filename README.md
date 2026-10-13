@@ -9,7 +9,7 @@ npm install
 npm run dev -- --port 5199
 ```
 
-Puis ouvrir http://localhost:5199. Sur ordinateur, l'appli s'affiche dans un cadre de téléphone ; sur mobile, en plein écran.
+Puis ouvrir http://localhost:5199. Sur ordinateur, une page d'aperçu montre tous les écrans dans des téléphones interactifs (thème clair/sombre, taille, QR code pour l'ouvrir sur mobile) ; ajouter `?app` à l'adresse pour afficher l'appli seule. Sur mobile, l'appli s'ouvre en plein écran.
 
 **Tester sur ton téléphone** : connecte-le au même Wi-Fi que l'ordinateur, puis ouvre l'adresse « Network » affichée par `npm run dev` (par ex. `http://192.168.1.20:5199`). Dans Safari/Chrome, « Ajouter à l'écran d'accueil » l'installe comme une appli.
 
