@@ -46,4 +46,4 @@ Les photos d'origine du Figma avaient du texte incrusté ; pour les remplacer, d
 
 L'appli est publiée sur GitHub Pages : https://cx-banger.github.io/trippy-app/
 
-Chaque push sur  la redéploie automatiquement (workflow , onglet **Actions** du dépôt). Les crédits des photos sont accessibles dans l'appli via **MENU › Crédits photos**.
+Chaque push sur `main` la redéploie automatiquement (workflow `.github/workflows/deploy.yml`, onglet **Actions** du dépôt). Les crédits des photos sont accessibles dans l'appli via **MENU › Crédits photos**.
