@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BadgeCheck, ChevronRight, Clock, Contact, EllipsisVertical, Eye, Heart, Languages, MessageCircle, Plus, Send, X } from 'lucide-react'
+import { BadgeCheck, ChevronRight, Clock, Contact, EllipsisVertical, Eye, Heart, Languages, MapPin, MessageCircle, Plus, Send, X } from 'lucide-react'
 import { BRANDS, HIGHLIGHTS, ME, POSTS, STORIES, type Comment, type Post, type Story } from '../data'
 import { useStore } from '../store'
-import { Screen, cx } from '../components/ui'
+import { Screen, TrainIcon, cx } from '../components/ui'
 
 const SLIDE_MS = 5000
 
@@ -69,7 +69,7 @@ export default function Feed() {
       <Carousel index={slide} onChange={setSlide} />
 
       <div className="mt-6 flex items-center justify-between px-6">
-        <h2 className="text-[22px] font-semibold">Other posts</h2>
+        <h2 className="text-[22px] font-semibold">Publications des Trippers</h2>
         <EllipsisVertical className="h-6 w-6" />
       </div>
 
@@ -194,15 +194,26 @@ function PostCard({ post }: { post: Post }) {
               following ? 'bg-sky text-white' : 'border-2 border-sky text-sky dark:border-transparent dark:bg-raised-dark dark:text-white',
             )}
           >
-            {following ? 'Following' : 'Follow'}
+            {following ? 'Abonné' : 'Suivre'}
           </button>
         </header>
         <p className="mt-2 text-sm font-semibold text-sky">{post.tags.join(', ')}</p>
         <p className="mt-1 text-[15px] leading-relaxed">{translated ? post.translation : post.text}</p>
+        <div className="mt-3 flex flex-wrap gap-1.5 text-xs">
+          <span className="flex items-center gap-1 rounded-full bg-neutral-100 px-2.5 py-1 dark:bg-raised-dark">
+            <MapPin className="h-3.5 w-3.5 text-tomato" /> {post.place}
+          </span>
+          {post.transport && (
+            <span className="flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200">
+              <TrainIcon className="h-2.5 w-6" /> {post.transport}
+            </span>
+          )}
+          {post.budget && <span className="rounded-full bg-sun/40 px-2.5 py-1 text-neutral-900 dark:bg-sun/20 dark:text-sun">💶 {post.budget}</span>}
+        </div>
 
-        <div className="mt-3 grid grid-cols-2 gap-1.5">
+        <div className={cx('mt-3 grid gap-1.5', post.photos.length > 1 && 'grid-cols-2')}>
           {post.photos.map((src, i) => (
-            <button key={src} onClick={() => setPhoto(src)} className="relative aspect-[6/5] overflow-hidden rounded-sm">
+            <button key={src} onClick={() => setPhoto(src)} className={cx('relative overflow-hidden rounded-sm', post.photos.length > 1 ? 'aspect-[6/5]' : 'aspect-[4/3] rounded-xl')}>
               <img src={src} alt="" className="h-full w-full object-cover" />
               {i === post.photos.length - 1 && (
                 <span className="absolute right-2 top-2 rounded-full bg-neutral-800/80 px-2.5 py-0.5 text-sm text-white">
@@ -214,10 +225,12 @@ function PostCard({ post }: { post: Post }) {
         </div>
 
         <footer className="mt-3 flex items-center gap-3 px-1">
-          <button onClick={() => setTranslated((v) => !v)} className="flex items-center gap-2" aria-pressed={translated}>
-            <Languages className="h-5 w-5 text-neutral-500 dark:text-neutral-300" />
-            <span className="rounded-md bg-neutral-200 px-3 py-1 text-xs font-semibold dark:bg-raised-dark">{translated ? 'Français' : 'English'}</span>
-          </button>
+          {post.translation && (
+            <button onClick={() => setTranslated((v) => !v)} className="flex items-center gap-2" aria-pressed={translated}>
+              <Languages className="h-5 w-5 text-neutral-500 dark:text-neutral-300" />
+              <span className="rounded-md bg-neutral-200 px-3 py-1 text-xs font-semibold dark:bg-raised-dark">{translated ? 'Français' : post.lang}</span>
+            </button>
+          )}
           <span className="flex items-center gap-1 text-sm text-neutral-500">
             <Eye className="h-4 w-4" /> {post.views}
           </span>

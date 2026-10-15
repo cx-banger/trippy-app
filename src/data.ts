@@ -205,54 +205,6 @@ export const HIGHLIGHTS: Highlight[] = [
   { id: 'h5', brand: 'aude', title: 'Les plus belles plages de la côte audoise', photo: img('narbonne.jpg') },
 ]
 
-export type Comment = { id: string; author: string; avatar: string; text: string; time: string; lang?: string; translation?: string }
-
-export type Post = {
-  id: string
-  author: string
-  handle: string
-  avatar: string
-  subtitle: string
-  time: string
-  tags: string[]
-  text: string
-  translation: string
-  photos: string[]
-  totalPhotos: number
-  views: number
-  source: string
-  comments: Comment[]
-}
-
-export const POSTS: Post[] = [
-  {
-    id: 'p1',
-    author: 'Teguh Mahesa',
-    handle: '@TagMeh',
-    avatar: img('av-teguh.png'),
-    subtitle: 'North Bali Reef Conservation',
-    time: '2 hours ago',
-    tags: ['#northbali', '#relax'],
-    text: 'A very interesting place and worth visiting if you are in the north of Bali. 🏔️🚵',
-    translation: "Un endroit très intéressant qui vaut le détour si vous êtes dans le nord de Bali. 🏔️🚵",
-    photos: [img('bali-gate.jpg'), img('bali-palms.jpg')],
-    totalPhotos: 5,
-    views: 23,
-    source: '@BaliTourism',
-    comments: [
-      {
-        id: 'c1',
-        author: 'Apta Bugantara',
-        avatar: img('av-apta.png'),
-        text: 'Keren acara barongnya sungguh luar bissa',
-        time: '2 hours ago',
-        lang: 'Indonesian',
-        translation: 'Le spectacle de barong était vraiment incroyable',
-      },
-    ],
-  },
-]
-
 // ——— Messagerie ———
 // Only people with a (free) Trippy account can be added to a group: CONTACTS is that directory.
 
@@ -269,6 +221,229 @@ export const CONTACTS: Record<string, Contact> = {
   max: { id: 'max', name: 'Max Durand', handle: '@max.roadtrip', avatar: img('av-max.png') },
   teguh: { id: 'teguh', name: 'Teguh Mahesa', handle: '@TagMeh', avatar: img('av-teguh.png') },
 }
+
+// ——— Feed ——— (after CONTACTS: comments are written by Trippy members)
+
+export type Comment = { id: string; author: string; avatar: string; text: string; time: string; lang?: string; translation?: string }
+
+export type Post = {
+  id: string
+  author: string
+  handle: string
+  avatar: string
+  subtitle: string
+  time: string
+  place: string // shown with a pin under the text
+  transport?: string // how the Tripper got there
+  budget?: string
+  tags: string[]
+  text: string
+  lang?: string // set when the text is not in French
+  translation?: string
+  photos: string[]
+  totalPhotos: number
+  views: number
+  source: string
+  comments: Comment[]
+}
+
+/** Comment written by a Trippy member (see CONTACTS). */
+const comment = (id: string, who: string, text: string, time: string): Comment => {
+  const person = CONTACTS[who]
+  return { id, author: person.name, avatar: person.avatar, text, time }
+}
+
+export const POSTS: Post[] = [
+  {
+    id: 'p-lisbon',
+    author: 'Sarah East',
+    handle: '@sarah.east',
+    avatar: img('av-sarah.png'),
+    subtitle: 'Interrail · étape 3',
+    time: 'il y a 1 h',
+    place: 'Alfama, Lisbonne · Portugal',
+    transport: 'Train + tram 28',
+    budget: '42 €/jour',
+    tags: ['#lisbonne', '#interrail', '#tram28'],
+    text: "Astuce du jour : prenez le tram 28 au terminus Martim Moniz tôt le matin, il est presque vide et vous traversez toute l'Alfama pour le prix d'un ticket. Le soir, on a trouvé du fado gratuit dans les petits bars du quartier 🎶",
+    photos: [img('lisbon.jpg')],
+    totalPhotos: 6,
+    views: 312,
+    source: '@VisitLisboa',
+    comments: [comment('cl1', 'daniel', 'Tu dors où là-bas ? 👀', 'il y a 40 min'), comment('cl2', 'sarah', 'Auberge de jeunesse à Baixa, 24 € la nuit avec le petit-déj', 'il y a 32 min')],
+  },
+  {
+    id: 'p-etretat',
+    author: 'Normandie Tourisme',
+    handle: '@normandietourisme',
+    avatar: img('logo-normandie.png'),
+    subtitle: 'Office de tourisme',
+    time: 'il y a 3 h',
+    place: 'Étretat · Normandie',
+    transport: 'TER jusqu’au Havre + bus',
+    tags: ['#etretat', '#falaises', '#randonnee'],
+    text: "L'Aiguille et la Porte d'Aval 🌊 Montez au sommet de la falaise par le sentier côtier : une courte marche et une vue imprenable. Vérifiez l'horaire des marées avant de descendre sur les galets.",
+    photos: [img('etretat.jpg')],
+    totalPhotos: 4,
+    views: 1840,
+    source: '@normandietourisme',
+    comments: [comment('ce1', 'maya', 'On y va le mois prochain avec le groupe !', 'il y a 2 h')],
+  },
+  {
+    id: 'p-prague',
+    author: 'Daniel Jones',
+    handle: '@danieljones',
+    avatar: img('av-daniel.png'),
+    subtitle: 'Road trip Europe centrale',
+    time: 'il y a 5 h',
+    place: 'Pont Charles, Prague · Tchéquie',
+    transport: 'Bus de nuit',
+    budget: '35 €/jour',
+    tags: ['#prague', '#sunrise', '#petitbudget'],
+    text: "Woke up at 5am for this and zero regrets. At sunrise the Charles Bridge is empty, by 9am you can't move 🌅",
+    lang: 'English',
+    translation: 'Réveil à 5 h pour ça et zéro regret. Au lever du soleil, le pont Charles est vide ; à 9 h, on ne peut plus bouger 🌅',
+    photos: [img('prague.jpg'), img('budapest.jpg')],
+    totalPhotos: 9,
+    views: 527,
+    source: '@VisitCzechia',
+    comments: [comment('cp1', 'oscar', 'Next stop Budapest ? 🇭🇺', 'il y a 4 h'), comment('cp2', 'daniel', 'Yes ! Le train direct, en réservant tôt ça reste pas cher', 'il y a 4 h')],
+  },
+  {
+    id: 'p-verdon',
+    author: 'Léa Martin',
+    handle: '@lea.guide',
+    avatar: img('guide-lea.svg'),
+    subtitle: 'Guide certifiée',
+    time: 'hier',
+    place: 'Gorges du Verdon · Provence',
+    transport: 'Covoiturage depuis Marseille',
+    tags: ['#verdon', '#kayak', '#nature'],
+    text: "Le Verdon hors saison, c'est l'eau turquoise sans la foule. Louez un kayak à plusieurs pour partager le prix. Restez sur les sentiers balisés et remportez vos déchets 🌿",
+    photos: [img('verdon.jpg')],
+    totalPhotos: 3,
+    views: 960,
+    source: '@lea.guide',
+    comments: [comment('cv1', 'sofia', 'Tu fais des sorties guidées en octobre ?', 'hier')],
+  },
+  {
+    id: 'p-nyhavn',
+    author: 'Maya Wilson',
+    handle: '@maya.w',
+    avatar: img('av-maya.png'),
+    subtitle: 'Week-end au Danemark',
+    time: 'hier',
+    place: 'Nyhavn, Copenhague · Danemark',
+    transport: 'Vélo en libre-service',
+    budget: '60 €/jour',
+    tags: ['#copenhague', '#velo', '#hygge'],
+    text: 'Copenhague à vélo, c’est la meilleure façon de visiter : des pistes partout et pas besoin de payer les transports. Pique-nique sur les quais de Nyhavn plutôt que les restos 🚲🥪',
+    photos: [img('nyhavn.jpg')],
+    totalPhotos: 5,
+    views: 274,
+    source: '@VisitCopenhagen',
+    comments: [],
+  },
+  {
+    id: 'p-sevilla',
+    author: 'Visit Europe',
+    handle: '@visiteurope',
+    avatar: img('logo-visiteurope.png'),
+    subtitle: 'Commission européenne du tourisme',
+    time: 'il y a 2 jours',
+    place: 'Plaza de España, Séville · Espagne',
+    transport: 'Train à grande vitesse depuis Madrid',
+    tags: ['#sevilla', '#andalousie', '#europe'],
+    text: 'La Plaza de España est gratuite et ouverte à tous. Venez en fin d’après-midi : la lumière est dorée et la chaleur retombe. Les bancs en céramique représentent les provinces espagnoles 🇪🇸',
+    photos: [img('sevilla.jpg')],
+    totalPhotos: 7,
+    views: 4210,
+    source: '@visiteurope',
+    comments: [comment('cs1', 'emily', 'Trop beau, je l’ajoute à ma liste', 'il y a 1 jour')],
+  },
+  {
+    id: 'p-porto',
+    author: 'Sofia Brooks',
+    handle: '@sofiab',
+    avatar: img('av-sofia.png'),
+    subtitle: 'Erasmus à Porto',
+    time: 'il y a 3 jours',
+    place: 'Ribeira, Porto · Portugal',
+    transport: 'Métro + à pied',
+    budget: '30 €/jour',
+    tags: ['#porto', '#erasmus', '#douro'],
+    text: 'Vue sur la Ribeira depuis Gaia. Bon plan : traversez le pont Dom-Luís par le tablier du haut à pied, c’est gratuit et la vue est meilleure qu’en croisière 😉',
+    photos: [img('porto.jpg')],
+    totalPhotos: 4,
+    views: 189,
+    source: '@VisitPorto',
+    comments: [comment('cpo1', 'david', 'Les francesinhas c’est où le mieux ?', 'il y a 2 jours')],
+  },
+  {
+    id: 'p-annecy',
+    author: 'David Smith',
+    handle: '@davids',
+    avatar: img('av-david.png'),
+    subtitle: 'Week-end Alpes',
+    time: 'il y a 4 jours',
+    place: 'Palais de l’Isle, Annecy · Haute-Savoie',
+    transport: 'Train + vélo autour du lac',
+    budget: '50 €/jour',
+    tags: ['#annecy', '#lac', '#velo'],
+    text: 'Annecy en deux jours : vieille ville le matin, tour du lac à vélo l’après-midi sur la piste cyclable. Et la baignade dans le lac, c’est gratuit 🏊',
+    photos: [img('annecy.jpg')],
+    totalPhotos: 8,
+    views: 402,
+    source: '@AnnecyTourisme',
+    comments: [],
+  },
+  {
+    id: 'p-hallstatt',
+    author: 'Emily Harrison',
+    handle: '@emilyh',
+    avatar: img('av-emily.png'),
+    subtitle: 'Hiver en Autriche',
+    time: 'il y a 5 jours',
+    place: 'Hallstatt · Autriche',
+    transport: 'Train + bateau',
+    budget: '55 €/jour',
+    tags: ['#hallstatt', '#autriche', '#hiver'],
+    text: 'Hallstatt en février : neige, brume sur le lac et beaucoup moins de monde qu’en été. On arrive par le bateau depuis la gare, c’est déjà une balade ❄️',
+    photos: [img('hallstatt.jpg')],
+    totalPhotos: 5,
+    views: 351,
+    source: '@VisitAustria',
+    comments: [comment('ch1', 'sarah', 'Ajouté à mon Interrail ✅', 'il y a 4 jours')],
+  },
+  {
+    id: 'p-bali',
+    author: 'Teguh Mahesa',
+    handle: '@TagMeh',
+    avatar: img('av-teguh.png'),
+    subtitle: 'North Bali Reef Conservation',
+    time: 'il y a 6 jours',
+    place: 'Nord de Bali · Indonésie',
+    tags: ['#northbali', '#relax'],
+    text: 'A very interesting place and worth visiting if you are in the north of Bali. 🏔️🚵',
+    lang: 'English',
+    translation: 'Un endroit très intéressant qui vaut le détour si vous êtes dans le nord de Bali. 🏔️🚵',
+    photos: [img('bali-gate.jpg'), img('bali-palms.jpg')],
+    totalPhotos: 5,
+    views: 23,
+    source: '@BaliTourism',
+    comments: [
+      {
+        id: 'c1',
+        author: 'Apta Bugantara',
+        avatar: img('av-apta.png'),
+        text: 'Keren acara barongnya sungguh luar bissa',
+        time: 'il y a 6 jours',
+        lang: 'Indonesian',
+        translation: 'Le spectacle de barong était vraiment incroyable',
+      },
+    ],
+  },
+]
 
 export type FileType = 'pdf' | 'docx' | 'xlsx'
 export type SharedFile = { name: string; type: FileType; size: string; preview?: FilePreview }

@@ -21,6 +21,17 @@ const photos = {
   forest: [W('0/05/For%C3%AAt_domaniale_des_Fanges_%282%29.jpg/1280px-For%C3%AAt_domaniale_des_Fanges_%282%29.jpg'), 'CC BY-SA 4.0'],
   'bali-gate': [W('a/a3/Lempuyang_4.jpg/1280px-Lempuyang_4.jpg'), 'CC0'],
   'bali-palms': [W('2/29/Bali%2C_rice_terraces_9.JPG/1280px-Bali%2C_rice_terraces_9.JPG'), 'CC BY-SA 3.0'],
+  // Feed posts
+  lisbon: [W('c/ce/Tram_Line_28_in_Alfama_%2850662582522%29.jpg/1280px-Tram_Line_28_in_Alfama_%2850662582522%29.jpg'), 'CC BY 2.0'],
+  porto: [W('9/99/View_of_Ribeira_from_Cais_de_Gaia%2C_20250605_1628_9890.jpg/1280px-View_of_Ribeira_from_Cais_de_Gaia%2C_20250605_1628_9890.jpg'), 'CC BY 4.0'],
+  prague: [W('5/59/Charles_Bridge_during_a_pink_sunrise_in_Prague.jpg/1280px-Charles_Bridge_during_a_pink_sunrise_in_Prague.jpg'), 'CC BY-SA 2.0'],
+  budapest: [W('6/65/Hungarian_Parliament_Building_2023-9.jpg/1280px-Hungarian_Parliament_Building_2023-9.jpg'), 'CC0'],
+  nyhavn: [W('c/ce/Kopenhagen_%28DK%29%2C_Nyhavn_--_2017_--_1711.jpg/1280px-Kopenhagen_%28DK%29%2C_Nyhavn_--_2017_--_1711.jpg'), 'CC BY-SA 4.0'],
+  etretat: [W('6/6c/Aiguille_et_Porte_d%C2%B4Aval.jpg/1280px-Aiguille_et_Porte_d%C2%B4Aval.jpg'), 'CC BY-SA 4.0'],
+  verdon: [W('c/c0/Gorge_du_Verdon_Goat_0254.jpg/1280px-Gorge_du_Verdon_Goat_0254.jpg'), 'CC BY-SA 3.0'],
+  sevilla: [W('b/b6/Plaza_de_Espa%C3%B1a_%28Sevilla%29_-_01.jpg/1280px-Plaza_de_Espa%C3%B1a_%28Sevilla%29_-_01.jpg'), 'CC BY-SA 4.0'],
+  annecy: [W('8/8f/Palais_de_l%27Isle_-_Annecy_-_France_-_panoramio.jpg/1280px-Palais_de_l%27Isle_-_Annecy_-_France_-_panoramio.jpg'), 'CC BY-SA 3.0'],
+  hallstatt: [W('b/bb/Hallst%C3%A4tter_See_20180206.jpg/1280px-Hallst%C3%A4tter_See_20180206.jpg'), 'CC BY-SA 4.0'],
 }
 
 // Crops from the Figma exports: [file, left, top, width, height]
