@@ -59,10 +59,10 @@ export default function Home() {
         </header>
 
         <h1 className="mt-6 px-1 font-display text-[23px] font-bold uppercase leading-[1.35] tracking-tight">
-          Learn design anywhere, anytime with our e&#8209;learning app
+          Découvre l’Europe en groupe, sans te ruiner
         </h1>
 
-        <SearchField className="mt-6" value={query} onChange={setQuery} placeholder="Find things to do" onFilter={() => setHotOnly((v) => !v)} />
+        <SearchField className="mt-6" value={query} onChange={setQuery} placeholder="Où veux-tu aller ?" onFilter={() => setHotOnly((v) => !v)} />
         {hotOnly && (
           <button onClick={() => setHotOnly(false)} className="mt-3 inline-flex items-center gap-1 rounded-full bg-sky/10 px-3 py-1 text-sm text-sky">
             <TrendingUp className="h-4 w-4" /> Hot Deals uniquement <X className="h-3.5 w-3.5" />
@@ -94,7 +94,7 @@ export default function Home() {
             ['/', 'Accueil'],
             ['/feed', 'Feed'],
             ['/discover', 'Découvrir'],
-            ['/savings', 'Épargne'],
+            ['/savings', 'Portefeuille'],
             ['/messages', 'Messages'],
           ].map(([to, label]) => (
             <Link key={to} to={to} onClick={() => setMenuOpen(false)} className="rounded-2xl px-4 py-3 hover:bg-black/5 dark:hover:bg-white/10">
@@ -206,9 +206,9 @@ function TripCard({
           <div className="relative flex h-full items-end justify-between p-4 text-white">
             <div>
               <p className="font-display text-lg font-bold uppercase leading-tight drop-shadow">
-                Start to
+                Voir le
                 <br />
-                practice
+                voyage
               </p>
               <span className="mt-1 inline-block rounded-full border-2 border-white bg-emerald-900/70 px-1.5 text-[11px] font-semibold">
                 {trip.days - 1}N/{trip.days}D

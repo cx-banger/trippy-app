@@ -45,7 +45,7 @@ export function Screen({ children, withNav = false, className }: { children: Rea
 
 const tabs = [
   { to: '/', icon: House, label: 'Accueil' },
-  { to: '/savings', icon: Wallet, label: 'Épargne' },
+  { to: '/savings', icon: Wallet, label: 'Portefeuille' },
   { to: '/feed', icon: Compass, label: 'Feed' },
   { to: '/discover', icon: ChartColumn, label: 'Découvrir' },
 ]

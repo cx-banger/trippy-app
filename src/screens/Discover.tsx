@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowUpRight, Clock, GraduationCap, History, MapPin } from 'lucide-react'
+import { ArrowUpRight, History, Leaf, Users } from 'lucide-react'
 import { TRIPS, type Trip } from '../data'
 import { useStore } from '../store'
 import { Screen, SearchField, TrainIcon, cx } from '../components/ui'
@@ -24,7 +24,7 @@ export default function Discover() {
     Closed: TRIPS.filter((t) => CLOSED.includes(t.id)),
   }
   const q = query.trim().toLowerCase()
-  let list = byTab[tab].filter((t) => `${t.name} ${t.region} ${t.tags.location}`.toLowerCase().includes(q))
+  let list = byTab[tab].filter((t) => `${t.name} ${t.region} ${t.tags.transport}`.toLowerCase().includes(q))
   if (sortByPrice) list = list.slice().sort((a, b) => a.price - b.price)
 
   return (
@@ -108,9 +108,9 @@ function OfferCard({ trip }: { trip: Trip }) {
           </div>
           <div className="no-scrollbar mt-4 flex gap-1.5 overflow-x-auto">
             {[
-              { icon: <MapPin className="h-4 w-4" />, label: trip.tags.location },
-              { icon: trip.id === 'biarritz' ? <TrainIcon className="h-3 w-7" /> : <GraduationCap className="h-4 w-4" />, label: trip.tags.level },
-              { icon: <Clock className="h-4 w-4" />, label: trip.tags.schedule },
+              { icon: <TrainIcon className="h-3 w-7" />, label: trip.tags.transport },
+              { icon: <Leaf className="h-4 w-4" />, label: trip.tags.co2 },
+              { icon: <Users className="h-4 w-4" />, label: trip.tags.group },
             ].map(({ icon, label }) => (
               <span
                 key={label}
@@ -141,7 +141,7 @@ function OfferCard({ trip }: { trip: Trip }) {
         <p className="flex items-center gap-2 text-sm">
           <History className="h-4 w-4" /> Posted {trip.postedDaysAgo} days ago
         </p>
-        <p className="text-xl font-bold">${trip.price}/pe</p>
+        <p className="text-xl font-bold">{trip.price} €/pers.</p>
       </div>
     </article>
   )

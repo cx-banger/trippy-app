@@ -71,7 +71,7 @@ export default function TripDetails() {
             <p className="flex items-center gap-2 text-[13px]">
               <History className="h-4 w-4" /> Posted {trip.postedDaysAgo} days ago
             </p>
-            <p className="text-xl font-bold">${trip.price}/per</p>
+            <p className="text-xl font-bold">{trip.price} €/pers.</p>
           </div>
         </section>
 
@@ -131,7 +131,7 @@ export default function TripDetails() {
             className="flex h-16 flex-1 items-center justify-center gap-3 rounded-full bg-sky text-white"
           >
             <span className="text-lg">{booked ? 'Booked' : 'Book Now'}</span>
-            <span className="text-3xl font-bold">${trip.bookPrice}</span>
+            <span className="text-3xl font-bold">{trip.bookPrice} €</span>
             <Send className="h-6 w-6" fill="currentColor" />
           </button>
         </div>
@@ -168,11 +168,11 @@ export default function TripDetails() {
         </div>
         <div className="mt-4 flex items-center justify-between px-1 text-lg">
           <span>Total</span>
-          <span className="text-2xl font-bold">${trip.bookPrice * people}</span>
+          <span className="text-2xl font-bold">{trip.bookPrice * people} €</span>
         </div>
         <button
           onClick={() => {
-            book(trip.id)
+            book(trip.id, people)
             setBookOpen(false)
             toast.show('Réservation confirmée 🎉')
           }}

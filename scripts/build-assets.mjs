@@ -48,10 +48,6 @@ const crops = {
   'av-ruffles': ['Feed-7.png', 26, 211, 104, 104],
   'av-me': ['Feed.png', 766, 1760, 46, 46],
   'av-max': ['Chat-2.png', 30, 456, 36, 36],
-  // Company tiles on the Discover cards (Jobs.png)
-  'co-google': ['Jobs.png', 82, 406, 96, 96],
-  'co-airbnb': ['Jobs.png', 82, 918, 96, 96],
-  'co-spotify': ['Jobs.png', 82, 1430, 96, 96],
 }
 
 async function fetchBuffer(url) {

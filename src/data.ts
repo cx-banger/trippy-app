@@ -18,13 +18,13 @@ export type Trip = {
   textOnColor: 'dark' | 'light'
   category: Category
   photo: string
-  logo: string
+  logo: string // emblem of the destination (city or tourism office), never a company brand
   rating: number
   travelTime: string
   price: number
   bookPrice: number
   postedDaysAgo: number
-  tags: { location: string; level: string; schedule: string }
+  tags: { transport: string; co2: string; group: string } // low-carbon travel first
   teaser: string
   intro: string
   facilities: { icon: 'wifi' | 'dinner' | 'tub' | 'pool'; label: string }[]
@@ -43,13 +43,13 @@ export const TRIPS: Trip[] = [
     textOnColor: 'dark',
     category: 'OUTDOOR',
     photo: img('narbonne.jpg'),
-    logo: img('co-spotify.png'),
+    logo: img('logo-aude.png'),
     rating: 4.3,
     travelTime: '1 hr 20 mins',
     price: 60,
     bookPrice: 55,
     postedDaysAgo: 2,
-    tags: { location: 'Remote', level: 'Freshers', schedule: 'Fulltime' },
+    tags: { transport: 'Train TER', co2: '−92 % CO₂', group: '12 places' },
     teaser: 'Sable fin, étangs et garrigue : deux jours pour profiter de la Méditerranée en petit groupe…',
     intro:
       "Deux jours entre plage et massif de la Clape. On partage la location, les repas et les sorties paddle. Idéal pour un premier voyage avec le groupe : peu de route, beaucoup de soleil et des couchers de soleil sur les étangs.",
@@ -71,14 +71,14 @@ export const TRIPS: Trip[] = [
     textOnColor: 'light',
     category: 'PLACES',
     photo: img('marseille.jpg'),
-    logo: img('co-airbnb.png'),
+    logo: img('city-marseille.svg'),
     rating: 4.6,
     travelTime: '3 hrs 50 mins',
     price: 125,
     bookPrice: 110,
     postedDaysAgo: 5,
-    tags: { location: 'Sydney', level: '1-5 years exp.', schedule: 'Part-time' },
-    teaser: 'Airbnb was born in 2007 when two Hosts welcomed three guests to their San Francisco home…',
+    tags: { transport: 'Train + covoit', co2: '−85 % CO₂', group: '17 places' },
+    teaser: 'Le Panier, les calanques en bateau et la Bonne Mère au coucher du soleil, en appartement partagé…',
     intro:
       "Trois jours pour découvrir Marseille depuis le Vieux-Port : le Panier, les calanques en bateau et Notre-Dame-de-la-Garde au coucher du soleil. Hébergement en appartement partagé à deux pas du port.",
     facilities: [
@@ -99,16 +99,16 @@ export const TRIPS: Trip[] = [
     textOnColor: 'light',
     category: 'COUNTRYSIDE',
     photo: img('biarritz.jpg'),
-    logo: img('co-google.png'),
+    logo: img('city-biarritz.svg'),
     rating: 4.5,
     travelTime: '2 hrs 40 mins',
     price: 85,
     bookPrice: 75,
     postedDaysAgo: 2,
-    tags: { location: 'New York', level: '3 years exp.', schedule: 'Fulltime' },
-    teaser: "UX Designers are the synthesis of design and development. They take Google's most innovative product concepts…",
+    tags: { transport: 'Train de nuit', co2: '−90 % CO₂', group: '11 places' },
+    teaser: 'Phare, Rocher de la Vierge et surf à la Côte des Basques : cinq jours au rythme du Pays basque…',
     intro:
-      "In a UX Designer job, you'll need both types of skills to develop the next generation of products. You'll partner with Researchers and Designers to define and deliver new features. Le séjour inclut le phare, le Rocher de la Vierge, une journée surf à la Côte des Basques et une soirée à Saint-Jean-de-Luz.",
+      "Cinq jours au Pays basque, en auberge de jeunesse et en groupe. Le séjour inclut le phare, le Rocher de la Vierge, une journée surf à la Côte des Basques et une soirée à Saint-Jean-de-Luz.",
     facilities: [
       { icon: 'wifi', label: '1 Heater' },
       { icon: 'dinner', label: 'Dinner' },
@@ -120,16 +120,28 @@ export const TRIPS: Trip[] = [
 
 export const CITIES = ['Toulouse, FRA', 'Paris, FRA', 'Lyon, FRA', 'Bordeaux, FRA', 'Montpellier, FRA']
 
-export type Brand = { id: string; name: string; bannerTitle?: string; logo: string; followers: string; banner: string }
+/** Who runs a channel. Only verified accounts can run one (offices, certified guides, partners). */
+export type Brand = {
+  id: string
+  name: string
+  bannerTitle?: string
+  logo: string
+  followers: string
+  banner: string
+  kind: 'office' | 'guide' | 'partner'
+  about: string
+}
 
 export const BRANDS: Record<string, Brand> = {
-  occitanie: { id: 'occitanie', name: 'Tourisme Occitanie', bannerTitle: 'Tourisme en Occitanie', logo: img('logo-occitanie.png'), followers: '2.2M', banner: '#B9CDB4' },
-  aude: { id: 'aude', name: 'Aude Tourisme', bannerTitle: 'Aude - Sud France', logo: img('logo-aude.png'), followers: '1.2M', banner: '#EBB9B2' },
-  paris: { id: 'paris', name: "Paris Je t'aime", bannerTitle: "Paris je T'aime", logo: img('logo-paris.png'), followers: '1.1M', banner: '#B9CDB4' },
-  normandie: { id: 'normandie', name: 'Normandie Tourisme', logo: img('logo-normandie.png'), followers: '2.1M', banner: '#B9CDB4' },
-  fun: { id: 'fun', name: 'Funbooker', logo: img('logo-fun.png'), followers: '2.2M', banner: '#F6C1E0' },
-  montpellier: { id: 'montpellier', name: 'Montpelier Tourisme', logo: img('logo-montpellier.png'), followers: '1.1M', banner: '#B9CDB4' },
-  europe: { id: 'europe', name: 'Visit Europe', logo: img('logo-visiteurope.png'), followers: '3.4M', banner: '#B9CDB4' },
+  occitanie: { id: 'occitanie', kind: 'office', name: 'Tourisme Occitanie', bannerTitle: 'Tourisme en Occitanie', logo: img('logo-occitanie.png'), followers: '2.2M', banner: '#B9CDB4', about: 'Comité régional du tourisme' },
+  aude: { id: 'aude', kind: 'office', name: 'Aude Tourisme', bannerTitle: 'Aude - Sud France', logo: img('logo-aude.png'), followers: '1.2M', banner: '#EBB9B2', about: 'Office départemental' },
+  paris: { id: 'paris', kind: 'office', name: "Paris Je t'aime", bannerTitle: "Paris je T'aime", logo: img('logo-paris.png'), followers: '1.1M', banner: '#B9CDB4', about: 'Office du tourisme de Paris' },
+  normandie: { id: 'normandie', kind: 'office', name: 'Normandie Tourisme', logo: img('logo-normandie.png'), followers: '2.1M', banner: '#B9CDB4', about: 'Comité régional du tourisme' },
+  montpellier: { id: 'montpellier', kind: 'office', name: 'Montpellier Tourisme', logo: img('logo-montpellier.png'), followers: '1.1M', banner: '#B9CDB4', about: 'Office de tourisme métropolitain' },
+  europe: { id: 'europe', kind: 'office', name: 'Visit Europe', logo: img('logo-visiteurope.png'), followers: '3.4M', banner: '#B9CDB4', about: 'Commission européenne du tourisme' },
+  lea: { id: 'lea', kind: 'guide', name: 'Léa Martin', logo: img('guide-lea.svg'), followers: '48K', banner: '#B9CDB4', about: 'Guide certifiée · Pyrénées' },
+  inaki: { id: 'inaki', kind: 'guide', name: 'Iñaki Etxeberria', logo: img('guide-inaki.svg'), followers: '21K', banner: '#EBB9B2', about: 'Guide certifié · Pays basque' },
+  fun: { id: 'fun', kind: 'partner', name: 'Funbooker', logo: img('logo-fun.png'), followers: '2.2M', banner: '#F6C1E0', about: 'Activités partenaires' },
 }
 
 export type Story = { id: string; user: string; avatar: string; ring: string; isMe?: boolean; slides: { photo: string; caption: string }[] }
@@ -241,182 +253,313 @@ export const POSTS: Post[] = [
   },
 ]
 
-export type Contact = { id: string; name: string; avatar: string; verified?: boolean; brand?: boolean }
+// ——— Messagerie ———
+// Only people with a (free) Trippy account can be added to a group: CONTACTS is that directory.
+
+export type Contact = { id: string; name: string; avatar: string; handle: string; verified?: boolean }
 
 export const CONTACTS: Record<string, Contact> = {
-  daniel: { id: 'daniel', name: 'Daniel Jones', avatar: img('av-daniel.png') },
-  sarah: { id: 'sarah', name: 'Sarah East', avatar: img('av-sarah.png') },
-  sofia: { id: 'sofia', name: 'Sofia Brooks', avatar: img('av-sofia.png') },
-  david: { id: 'david', name: 'David Smith', avatar: img('av-david.png') },
-  maya: { id: 'maya', name: 'Maya Wilson', avatar: img('av-maya.png') },
-  emily: { id: 'emily', name: 'Emily Harrison', avatar: img('av-emily.png') },
-  occitanie: { id: 'occitanie', name: 'Tourisme Occitanie', avatar: img('logo-occitanie.png'), verified: true, brand: true },
-  oscar: { id: 'oscar', name: 'Ocar Carter', avatar: img('av-oscar.png') },
-  toscane: { id: 'toscane', name: 'Road Trip en Toscane', avatar: img('logo-group.png'), verified: true },
+  daniel: { id: 'daniel', name: 'Daniel Jones', handle: '@danieljones', avatar: img('av-daniel.png') },
+  sarah: { id: 'sarah', name: 'Sarah East', handle: '@sarah.east', avatar: img('av-sarah.png') },
+  sofia: { id: 'sofia', name: 'Sofia Brooks', handle: '@sofiab', avatar: img('av-sofia.png') },
+  david: { id: 'david', name: 'David Smith', handle: '@davids', avatar: img('av-david.png') },
+  maya: { id: 'maya', name: 'Maya Wilson', handle: '@maya.w', avatar: img('av-maya.png') },
+  emily: { id: 'emily', name: 'Emily Harrison', handle: '@emilyh', avatar: img('av-emily.png') },
+  oscar: { id: 'oscar', name: 'Oscar Carter', handle: '@oscarc', avatar: img('av-oscar.png') },
+  max: { id: 'max', name: 'Max Durand', handle: '@max.roadtrip', avatar: img('av-max.png') },
+  teguh: { id: 'teguh', name: 'Teguh Mahesa', handle: '@TagMeh', avatar: img('av-teguh.png') },
 }
+
+export type FileType = 'pdf' | 'docx' | 'xlsx'
+export type SharedFile = { name: string; type: FileType; size: string; preview?: FilePreview }
+/** What the in-app viewer shows. Imported files only have a name and size. */
+export type FilePreview = { kind: 'text'; lines: string[] } | { kind: 'checklist'; items: { label: string; done: boolean }[] } | { kind: 'table'; head: string[]; rows: string[][] }
 
 export type Message = {
   id: string
-  from: string // contact id, or 'me'
-  author?: string
-  authorColor?: string
+  from: string // contact id, brand id, 'me' or 'system'
   text: string
   time: string
   pinned?: boolean
-  kind?: 'text' | 'event' | 'poll'
+  kind?: 'text' | 'event' | 'poll' | 'file' | 'tip'
+  pollId?: string
+  file?: SharedFile
+  photo?: string // tips in channels
 }
 
-export type Poll = { question: string; options: { id: string; label: string; votes: number }[]; hoursLeft: number }
+export type Poll = { id: string; question: string; options: { id: string; label: string; votes: number }[]; closesIn: string; author: string }
 
 export type Conversation = {
   id: string
-  contact: string
+  kind: 'direct' | 'group' | 'channel'
+  /** direct: contact id · channel: brand id (or 'me' for channels created in the app) */
+  with: string
+  name?: string // groups and channels created in the app
+  members?: string[] // groups: contact ids (without me)
+  admins?: string[]
+  tripId?: string // group organised around a Trippy trip
+  visibility?: 'public' | 'private' // channels
   preview: string
   time: string
   unread: number
-  boldPreview?: boolean
-  followable?: boolean
   messages: Message[]
-  poll?: Poll
-  channelName?: string // set for channels created in the app
+  polls?: Record<string, Poll>
+}
+
+const PB_ITINERARY: FilePreview = {
+  kind: 'text',
+  lines: [
+    'Road trip Pays basque — 10 au 14 septembre',
+    'J1 · Train de nuit Paris → Bayonne, arrivée 7h12',
+    'J2 · Bayonne : Petit Bayonne, halles, chocolat',
+    'J3 · Biarritz : phare, Rocher de la Vierge, surf Côte des Basques',
+    'J4 · Saint-Jean-de-Luz en bus (ligne 3, 2 €)',
+    'J5 · Retour en TER + TGV',
+    'Hébergement : auberge de jeunesse de Biarritz (dortoir 6)',
+  ],
+}
+
+const PB_BUDGET: FilePreview = {
+  kind: 'table',
+  head: ['Poste', 'Total', 'Par pers.'],
+  rows: [
+    ['Train de nuit A/R', '312 €', '78 €'],
+    ['Auberge (4 nuits)', '416 €', '104 €'],
+    ['Courses + repas', '240 €', '60 €'],
+    ['Cours de surf', '140 €', '35 €'],
+    ['Bus locaux', '32 €', '8 €'],
+    ['Total', '1 140 €', '285 €'],
+  ],
+}
+
+const PB_PACKING: FilePreview = {
+  kind: 'checklist',
+  items: [
+    { label: "Carte d'identité + carte Avantage Jeune", done: true },
+    { label: 'Combinaison de surf (ou location sur place)', done: false },
+    { label: 'Gourde et tote bag', done: true },
+    { label: 'Sac de couchage léger pour le train', done: false },
+  ],
 }
 
 export const CONVERSATIONS: Conversation[] = [
   {
-    id: 'toscane',
-    contact: 'toscane',
-    preview: 'Which quest should we take?',
+    id: 'paysbasque',
+    kind: 'group',
+    with: 'paysbasque',
+    name: 'Road trip Pays basque',
+    members: ['max', 'sarah', 'daniel', 'sofia'],
+    admins: ['max'],
+    tripId: 'biarritz',
+    preview: 'Sondage : comment on rejoint Biarritz ?',
     time: '10:20',
-    unread: 6,
+    unread: 4,
     messages: [
-      {
-        id: 'm1',
-        from: 'max',
-        author: 'Max (Organisateur)',
-        authorColor: '#E5383B',
-        pinned: true,
-        text: 'Salut à tous, content de vous avoir dans le groupe ! Voici les premières infos pour notre road trip à Biarritz.',
-        time: '10:15',
-      },
-      {
-        id: 'm2',
-        from: 'max',
-        author: 'Max (Organisateur)',
-        authorColor: '#E5383B',
-        text: 'Dates : 10 - 14 Septembre\nItinéraire : Bayonne - Biarritz - Saint-Jean-de-Luz\nHébergement : Airbnb à Biarritz\nTransport : Location de voiture',
-        time: '10:16',
-      },
-      {
-        id: 'm3',
-        from: 'kakashi',
-        author: 'Kakashi Sensei',
-        authorColor: '#E07A47',
-        text: "Who said you will be going on a S rank quest. There are others of your level. Let's have a poll to decide the quest.",
-        time: '10:16',
-      },
-      { id: 'm4', from: 'naruto', kind: 'event', text: 'Naruto create a poll.', time: '10:16' },
-      { id: 'm5', from: 'me', kind: 'poll', text: '', time: '10:20' },
+      { id: 'm1', from: 'max', pinned: true, text: 'Salut à tous, content de vous avoir dans le groupe ! Toutes les infos sont dans les fichiers ci-dessous 👇', time: '10:15' },
+      { id: 'm2', from: 'max', kind: 'file', text: '', time: '10:15', file: { name: 'Itinéraire Pays basque.pdf', type: 'pdf', size: '248 Ko', preview: PB_ITINERARY } },
+      { id: 'm3', from: 'max', kind: 'file', text: '', time: '10:16', file: { name: 'Budget partagé.xlsx', type: 'xlsx', size: '32 Ko', preview: PB_BUDGET } },
+      { id: 'm4', from: 'sarah', kind: 'file', text: '', time: '10:17', file: { name: "Liste d'affaires.docx", type: 'docx', size: '18 Ko', preview: PB_PACKING } },
+      { id: 'm5', from: 'sarah', text: 'Le train de nuit revient moins cher que la voiture et on gagne une nuit 🚆', time: '10:18' },
+      { id: 'm6', from: 'system', kind: 'event', text: 'Daniel a créé un sondage', time: '10:19' },
+      { id: 'm7', from: 'daniel', kind: 'poll', pollId: 'pb-transport', text: '', time: '10:20' },
     ],
-    poll: {
-      question: 'Which quest should we take?',
-      hoursLeft: 24,
-      options: [
-        { id: 'o1', label: 'Find Orochimaru secret base.', votes: 2 },
-        { id: 'o2', label: "Find granny's cat", votes: 1 },
-      ],
+    polls: {
+      'pb-transport': {
+        id: 'pb-transport',
+        author: 'daniel',
+        question: 'Comment on rejoint Biarritz ?',
+        closesIn: '24 h',
+        options: [
+          { id: 'o1', label: 'Train de nuit (78 €)', votes: 2 },
+          { id: 'o2', label: 'Covoiturage (45 €)', votes: 1 },
+          { id: 'o3', label: 'Bus longue distance (39 €)', votes: 0 },
+        ],
+      },
     },
   },
   {
+    id: 'narbonne-we',
+    kind: 'group',
+    with: 'narbonne-we',
+    name: 'Week-end Narbonne-Plage',
+    members: ['daniel', 'maya'],
+    admins: ['me'],
+    tripId: 'narbonne',
+    preview: 'Maya : je ramène le paddle !',
+    time: 'Hier',
+    unread: 0,
+    messages: [
+      { id: 'n1', from: 'system', kind: 'event', text: 'Tu as créé le groupe', time: 'Lundi' },
+      { id: 'n2', from: 'me', text: 'TER samedi 8h04 depuis Toulouse, qui est chaud ?', time: 'Lundi' },
+      { id: 'n3', from: 'maya', text: 'Je ramène le paddle !', time: 'Hier' },
+    ],
+  },
+  {
     id: 'daniel',
-    contact: 'daniel',
-    preview: 'It was realy great to see you at the beach!',
+    kind: 'direct',
+    with: 'daniel',
+    preview: "C'était trop bien de te voir à la plage !",
     time: '10:20',
     unread: 0,
     messages: [
       { id: 'd1', from: 'me', text: 'Merci pour le week-end à Narbonne 🙌', time: '10:12' },
-      { id: 'd2', from: 'daniel', text: 'It was realy great to see you at the beach!', time: '10:20' },
+      { id: 'd2', from: 'daniel', text: "C'était trop bien de te voir à la plage !", time: '10:20' },
     ],
   },
   {
     id: 'sarah',
-    contact: 'sarah',
-    preview: 'Perfect',
+    kind: 'direct',
+    with: 'sarah',
+    preview: 'Parfait',
     time: '10:02',
-    unread: 6,
-    boldPreview: true,
+    unread: 2,
     messages: [
       { id: 's1', from: 'me', text: 'On part vendredi à 8h ?', time: '09:58' },
-      { id: 's2', from: 'sarah', text: 'Perfect', time: '10:02' },
+      { id: 's2', from: 'sarah', text: 'Parfait', time: '10:02' },
     ],
   },
   {
     id: 'sofia',
-    contact: 'sofia',
-    preview: "Let's catchup when you are back from Biarritz",
+    kind: 'direct',
+    with: 'sofia',
+    preview: 'On se fait un café quand tu rentres de Biarritz',
     time: 'Hier',
     unread: 0,
-    messages: [{ id: 'f1', from: 'sofia', text: "Let's catchup when you are back from Biarritz", time: 'Hier' }],
+    messages: [{ id: 'f1', from: 'sofia', text: 'On se fait un café quand tu rentres de Biarritz', time: 'Hier' }],
   },
   {
     id: 'david',
-    contact: 'david',
-    preview: 'Thanks',
+    kind: 'direct',
+    with: 'david',
+    preview: 'Merci !',
     time: 'Hier',
     unread: 0,
     messages: [
       { id: 'v1', from: 'me', text: "Je t'ai envoyé l'itinéraire", time: 'Hier' },
-      { id: 'v2', from: 'david', text: 'Thanks', time: 'Hier' },
+      { id: 'v2', from: 'david', text: 'Merci !', time: 'Hier' },
     ],
   },
   {
     id: 'maya',
-    contact: 'maya',
-    preview: 'Hey, how are you doing ?',
-    time: 'Tuesday',
-    unread: 2,
-    boldPreview: true,
-    messages: [{ id: 'y1', from: 'maya', text: 'Hey, how are you doing ?', time: 'Tuesday' }],
-  },
-  {
-    id: 'emily',
-    contact: 'emily',
-    preview: 'Send through your work and I will have a look',
-    time: '',
+    kind: 'direct',
+    with: 'maya',
+    preview: 'Hey, ça va ?',
+    time: 'Mardi',
     unread: 1,
-    boldPreview: true,
-    messages: [{ id: 'e1', from: 'emily', text: 'Send through your work and I will have a look', time: 'Monday' }],
-  },
-  {
-    id: 'occitanie',
-    contact: 'occitanie',
-    preview: "Découvrez l'engagement du Comité Régional du Tourisme",
-    time: '',
-    unread: 0,
-    boldPreview: true,
-    followable: true,
-    messages: [{ id: 'o1', from: 'occitanie', text: "Découvrez l'engagement du Comité Régional du Tourisme pour un tourisme durable 🌿", time: 'Monday' }],
+    messages: [{ id: 'y1', from: 'maya', text: 'Hey, ça va ?', time: 'Mardi' }],
   },
   {
     id: 'oscar',
-    contact: 'oscar',
-    preview: 'Check out this funny video from the trip',
-    time: '',
+    kind: 'direct',
+    with: 'oscar',
+    preview: 'Regarde la vidéo du trip 😂',
+    time: 'Dimanche',
     unread: 0,
-    followable: true,
-    messages: [{ id: 'k1', from: 'oscar', text: 'Check out this funny video from the trip 😂', time: 'Sunday' }],
+    messages: [{ id: 'k1', from: 'oscar', text: 'Regarde la vidéo du trip 😂', time: 'Dimanche' }],
+  },
+  {
+    id: 'ch-occitanie',
+    kind: 'channel',
+    with: 'occitanie',
+    preview: 'Astuce : les tarifs jeunes sur les trains liO',
+    time: '09:30',
+    unread: 1,
+    messages: [
+      { id: 'oc1', from: 'occitanie', kind: 'tip', text: "Découvrez l'engagement du Comité Régional du Tourisme pour un tourisme durable 🌿", time: 'Lundi', photo: img('forest.jpg') },
+      { id: 'oc2', from: 'occitanie', kind: 'tip', text: "Astuce : la Région propose des tarifs très réduits sur les trains liO pour les jeunes. Vérifiez les conditions sur le site liO avant de réserver 🚆", time: '09:30' },
+    ],
+  },
+  {
+    id: 'ch-aude',
+    kind: 'channel',
+    with: 'aude',
+    preview: 'Les plus belles plages de la côte audoise',
+    time: 'Hier',
+    unread: 0,
+    messages: [
+      { id: 'au1', from: 'aude', kind: 'tip', text: 'Les plus belles plages de la côte audoise, accessibles en bus depuis Narbonne 🏖️', time: 'Hier', photo: img('narbonne.jpg') },
+      { id: 'au2', from: 'aude', kind: 'tip', text: 'Randonnée : la forêt des Fanges reste fraîche même en plein été. Comptez 3 h pour la boucle de 12 km.', time: 'Hier', photo: img('forest.jpg') },
+    ],
+  },
+  {
+    id: 'ch-lea',
+    kind: 'channel',
+    with: 'lea',
+    preview: 'Bivouac : les 3 règles à connaître',
+    time: 'Mardi',
+    unread: 0,
+    messages: [
+      { id: 'le1', from: 'lea', kind: 'tip', text: "Bivouac dans les Pyrénées : on s'installe au coucher du soleil, on repart au lever, et on ne laisse aucune trace. Je réponds à vos questions en commentaire 🏕️", time: 'Mardi' },
+    ],
+  },
+  {
+    id: 'ch-paris',
+    kind: 'channel',
+    with: 'paris',
+    preview: 'Les musées nationaux gratuits pour les moins de 26 ans',
+    time: 'Lundi',
+    unread: 0,
+    messages: [
+      { id: 'pa1', from: 'paris', kind: 'tip', text: "Moins de 26 ans et résident de l'UE ? Les collections permanentes des musées nationaux sont gratuites 🎨", time: 'Lundi', photo: img('paris-boat.jpg') },
+    ],
   },
 ]
 
-export const conversationName = (c: Conversation) => c.channelName ?? CONTACTS[c.contact]?.name ?? 'Conversation'
+/** Brands without a channel in CONVERSATIONS get an empty one when opened. */
+export const channelFor = (brandId: string): Conversation => ({
+  id: `ch-${brandId}`,
+  kind: 'channel',
+  with: brandId,
+  preview: '',
+  time: '',
+  unread: 0,
+  messages: [{ id: 'welcome', from: brandId, kind: 'tip', text: `Bienvenue sur la chaîne de ${BRANDS[brandId]?.name ?? 'ce partenaire'} ! Suivez-la pour recevoir nos conseils.`, time: '' }],
+})
 
-export const GROUP_FILTERS = ['All', 'Most active', 'Popular', 'New', 'Indépendants'] as const
+export function conversationName(c: Conversation) {
+  if (c.name) return c.name
+  if (c.kind === 'channel') return BRANDS[c.with]?.name ?? 'Chaîne'
+  return CONTACTS[c.with]?.name ?? 'Conversation'
+}
 
-export type Goal = { id: string; name: string; saved: number; target: number; left: string; color: string; text: 'dark' | 'light'; icon: 'hand' | 'plane' | 'home' }
+export function conversationAvatar(c: Conversation): string | undefined {
+  if (c.kind === 'channel') return BRANDS[c.with]?.logo
+  if (c.kind === 'direct') return CONTACTS[c.with]?.avatar
+  return undefined
+}
+
+/** Display name and avatar of whoever sent a message. */
+export function sender(id: string): { name: string; avatar?: string } {
+  if (id === 'me') return { name: 'Toi', avatar: ME.avatar }
+  if (CONTACTS[id]) return { name: CONTACTS[id].name, avatar: CONTACTS[id].avatar }
+  if (BRANDS[id]) return { name: BRANDS[id].name, avatar: BRANDS[id].logo }
+  return { name: '' }
+}
+
+export const AUTHOR_COLORS = ['#E5383B', '#E07A47', '#1189B0', '#5A27F7', '#2E7D5B']
+
+export const KIND_LABEL: Record<Brand['kind'], string> = { office: 'Office de tourisme', guide: 'Guide certifié·e', partner: 'Partenaire' }
+
+export const CHANNEL_FILTERS = ['Tous', 'Offices de tourisme', 'Guides certifiés', 'Partenaires', 'Populaires'] as const
+
+// ——— Portefeuille ———
+
+export type Goal = {
+  id: string
+  name: string
+  saved: number
+  target: number
+  deadline: string // ISO date
+  color: string
+  text: 'dark' | 'light'
+  icon: 'hand' | 'plane' | 'home'
+  tripId?: string
+}
 
 export const GOALS: Goal[] = [
-  { id: 'hobbies', name: 'Hobbies', saved: 48.24, target: 80.4, left: '30 days left', color: '#FF453A', text: 'light', icon: 'hand' },
-  { id: 'vacances', name: 'Vacances', saved: 29.37, target: 60, left: '30 days left', color: '#FDE73F', text: 'dark', icon: 'plane' },
-  { id: 'logement', name: 'Logement', saved: 39.67, target: 85.5, left: '3 years left', color: '#3300E0', text: 'light', icon: 'home' },
+  { id: 'paysbasque', name: 'Pays basque', saved: 185, target: 285, deadline: '2027-09-01', color: '#FF453A', text: 'light', icon: 'plane', tripId: 'biarritz' },
+  { id: 'interrail', name: 'Interrail été 2027', saved: 120, target: 450, deadline: '2027-06-15', color: '#FDE73F', text: 'dark', icon: 'plane' },
+  { id: 'loisirs', name: 'Sorties & loisirs', saved: 48, target: 80, deadline: '2026-12-20', color: '#3300E0', text: 'light', icon: 'hand' },
 ]
 
 export const GOAL_COLORS = [
@@ -425,6 +568,76 @@ export const GOAL_COLORS = [
   { color: '#3300E0', text: 'light' as const },
   { color: '#1189B0', text: 'light' as const },
   { color: '#B9CDB4', text: 'dark' as const },
+]
+
+export type Tip = { id: string; title: string; body: string; saving: string; tag: 'Transport' | 'Logement' | 'Culture' | 'Au quotidien'; url: string }
+
+/** Real schemes for young travellers in Europe. Amounts change: the app links to the official page. */
+export const SAVING_TIPS: Tip[] = [
+  {
+    id: 'discovereu',
+    title: 'DiscoverEU',
+    body: "Tu as 18 ans ? L'Union européenne fait gagner des pass de train pour voyager jusqu'à 30 jours en Europe, deux sessions par an.",
+    saving: 'Pass gratuit',
+    tag: 'Transport',
+    url: 'https://youth.europa.eu/discovereu_fr',
+  },
+  {
+    id: 'avantage-jeune',
+    title: 'Carte Avantage Jeune SNCF',
+    body: 'De 12 à 27 ans : environ 30 % de réduction sur les TGV INOUI, Intercités et la plupart des TER, prix plafonnés.',
+    saving: '−30 %',
+    tag: 'Transport',
+    url: 'https://www.sncf-connect.com/cartes-avantages',
+  },
+  {
+    id: 'interrail',
+    title: 'Pass Interrail Jeune',
+    body: 'Moins de 28 ans : tarif réduit sur le pass qui donne accès aux trains de 33 pays. Idéal pour un tour d’Europe.',
+    saving: 'Tarif jeune',
+    tag: 'Transport',
+    url: 'https://www.interrail.eu/fr',
+  },
+  {
+    id: 'covoit',
+    title: 'Covoiturage',
+    body: 'Partager la route divise le prix du trajet et les émissions. Pense à le proposer dans tes groupes Trippy.',
+    saving: 'Jusqu’à −75 %',
+    tag: 'Transport',
+    url: 'https://www.blablacar.fr',
+  },
+  {
+    id: 'auberges',
+    title: 'Auberges de jeunesse',
+    body: 'Dortoirs, cuisine partagée et rencontres : la carte d’adhérent donne accès à un réseau mondial d’auberges.',
+    saving: 'Dès ~25 €/nuit',
+    tag: 'Logement',
+    url: 'https://www.hifrance.org',
+  },
+  {
+    id: 'musees',
+    title: 'Musées gratuits',
+    body: "En France, les collections permanentes des musées et monuments nationaux sont gratuites pour les moins de 26 ans résidents de l'UE.",
+    saving: 'Gratuit',
+    tag: 'Culture',
+    url: 'https://www.culture.gouv.fr',
+  },
+  {
+    id: 'eyca',
+    title: 'Carte Jeune Européenne',
+    body: 'Des réductions dans plus de 35 pays sur les transports, la culture et les loisirs, jusqu’à 30 ans.',
+    saving: 'Réductions',
+    tag: 'Au quotidien',
+    url: 'https://www.eyca.org',
+  },
+  {
+    id: 'courses',
+    title: 'Cuisiner en groupe',
+    body: 'Faire les courses ensemble et cuisiner à l’auberge revient 3 à 4 fois moins cher que le restaurant à chaque repas.',
+    saving: '~−70 %',
+    tag: 'Au quotidien',
+    url: 'https://www.hifrance.org',
+  },
 ]
 
 export const ME = { name: 'Ruffles', avatar: img('av-me.png') }

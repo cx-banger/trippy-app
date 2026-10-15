@@ -9,9 +9,9 @@ const SCREENS = [
   { path: 'trip/biarritz', label: 'Détails du voyage' },
   { path: 'discover', label: 'Découvrir' },
   { path: 'feed', label: 'Feed' },
-  { path: 'savings', label: 'Épargne' },
+  { path: 'savings', label: 'Portefeuille' },
   { path: 'messages', label: 'Messages' },
-  { path: 'chat/toscane', label: 'Chat de groupe + sondage' },
+  { path: 'chat/paysbasque', label: 'Groupe : sondage + fichiers' },
   { path: 'trip/marseille', label: 'Réservation' },
 ]
 
