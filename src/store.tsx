@@ -12,7 +12,12 @@ type State = {
   pollVote: Record<string, string> // poll id -> option id
   conversations: Conversation[]
   goals: Goal[]
+  monthSaved: { month: string; amount: number } // net amount put aside this calendar month
   readNotifications: boolean
+}
+
+function currentMonth() {
+  return new Date().toISOString().slice(0, 7)
 }
 
 const initialState: State = {
@@ -26,6 +31,7 @@ const initialState: State = {
   pollVote: {},
   conversations: CONVERSATIONS,
   goals: GOALS,
+  monthSaved: { month: currentMonth(), amount: 35 }, // demo: some savings already this month
   readNotifications: false,
 }
 
@@ -45,6 +51,8 @@ function readSaved(): Partial<State> {
 
 function load(): State {
   const state = { ...initialState, ...readSaved() }
+  // a new month starts from zero
+  if (state.monthSaved.month !== currentMonth()) state.monthSaved = { month: currentMonth(), amount: 0 }
   return forcedTheme ? { ...state, theme: forcedTheme } : state
 }
 
@@ -192,7 +200,17 @@ function useStoreValue() {
       openChannel: (brandId: string) =>
         patch((s) => (s.conversations.some((c) => c.id === `ch-${brandId}`) ? {} : { conversations: [...s.conversations, channelFor(brandId)] })),
       saveToGoal: (id: string, amount: number) =>
-        patch((s) => ({ goals: s.goals.map((g) => (g.id === id ? { ...g, saved: Math.round(Math.max(0, g.saved + amount) * 100) / 100 } : g)) })),
+        patch((s) => {
+          const goal = s.goals.find((g) => g.id === id)
+          if (!goal) return {}
+          const saved = Math.round(Math.max(0, goal.saved + amount) * 100) / 100
+          const month = currentMonth()
+          const before = s.monthSaved.month === month ? s.monthSaved.amount : 0
+          return {
+            goals: s.goals.map((g) => (g.id === id ? { ...g, saved } : g)),
+            monthSaved: { month, amount: Math.round((before + saved - goal.saved) * 100) / 100 },
+          }
+        }),
       addGoal: (goal: Goal) => patch((s) => ({ goals: [...s.goals, goal] })),
       removeGoal: (id: string) => patch((s) => ({ goals: s.goals.filter((g) => g.id !== id) })),
       reset: () => setState(initialState),

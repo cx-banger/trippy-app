@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import QRCode from 'qrcode'
-import { ChevronLeft, ExternalLink, Info, Leaf, PiggyBank, Plus, Ticket, Trash2, Users, X } from 'lucide-react'
+import { ChevronLeft, ExternalLink, TrendingDown, TrendingUp, Info, Leaf, PiggyBank, Plus, Ticket, Trash2, Users, X } from 'lucide-react'
 import { GOAL_COLORS, SAVING_TIPS, TRIPS, type Goal, type Tip, type Trip } from '../data'
 import { useStore } from '../store'
 import { Screen, Sheet, TrainIcon, cx } from '../components/ui'
@@ -27,6 +27,7 @@ export default function Savings() {
   const [creating, setCreating] = useState(false)
   const total = state.goals.reduce((n, g) => n + g.saved, 0)
   const target = state.goals.reduce((n, g) => n + g.target, 0)
+  const thisMonth = state.monthSaved.amount
 
   return (
     <Screen withNav>
@@ -43,16 +44,19 @@ export default function Savings() {
           )}
         </div>
 
-        <div className="mt-5 rounded-3xl bg-neutral-900 p-5 text-white dark:bg-raised-dark">
-          <p className="text-sm text-white/70">Mis de côté pour tes aventures</p>
-          <p className="mt-1 font-display text-4xl font-bold">{euro(total)}</p>
-          <div className="mt-3 h-1.5 rounded-full bg-white/20">
-            <div className="h-full rounded-full bg-sun transition-all duration-500" style={{ width: `${Math.min(100, (total / (target || 1)) * 100)}%` }} />
+        <div className="mt-5 rounded-3xl bg-gradient-to-br from-[#C8F53B] to-[#7FD13A] p-5 text-neutral-900 shadow-[0_10px_30px_rgba(127,209,58,0.35)]">
+          <p className="text-sm text-neutral-800">Mis de côté pour tes aventures</p>
+          <p className="mt-1 font-display text-4xl font-bold tracking-tight">{euro(total)}</p>
+          <div className="mt-4 flex items-center justify-between text-sm">
+            <span className="flex items-center gap-1.5 rounded-full bg-black/10 px-3 py-1 font-medium">
+              {thisMonth < 0 ? <TrendingDown className="h-4 w-4" /> : <TrendingUp className="h-4 w-4" />}
+              {thisMonth < 0 ? '−' : '+'}
+              {euro(Math.abs(thisMonth))} ce mois
+            </span>
+            <span className="text-neutral-800">
+              {state.goals.length} objectifs · {Math.round((total / (target || 1)) * 100)} %
+            </span>
           </div>
-          <p className="mt-2 flex justify-between text-xs text-white/70">
-            <span>{state.goals.length} objectifs</span>
-            <span>sur {euro(target)}</span>
-          </p>
         </div>
 
         <div className="mt-5 grid grid-cols-3 gap-1 rounded-full bg-neutral-100 p-1 dark:bg-raised-dark" role="tablist">
