@@ -8,6 +8,7 @@ import Feed from './screens/Feed'
 import Savings from './screens/Savings'
 import Messages from './screens/Messages'
 import Chat from './screens/Chat'
+import TripTicket from './screens/TripTicket'
 import DesktopPreview from './DesktopPreview'
 
 // On a computer, show the gallery of phones instead of the app itself.
@@ -42,6 +43,7 @@ export default function App() {
             </Route>
             <Route path="trip/:id" element={<TripDetails />} />
             <Route path="chat/:id" element={<Chat />} />
+            <Route path="ticket/:id" element={<TripTicket />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </PhoneFrame>

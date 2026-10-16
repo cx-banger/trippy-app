@@ -106,7 +106,7 @@ export const TRIPS: Trip[] = [
     price: 85,
     bookPrice: 75,
     postedDaysAgo: 2,
-    tags: { transport: 'Train de nuit', co2: '−90 % CO₂', group: '11 places' },
+    tags: { transport: 'Intercités', co2: '−90 % CO₂', group: '11 places' },
     teaser: 'Phare, Rocher de la Vierge et surf à la Côte des Basques : cinq jours au rythme du Pays basque…',
     intro:
       "Cinq jours au Pays basque, en auberge de jeunesse et en groupe. Le séjour inclut le phare, le Rocher de la Vierge, une journée surf à la Côte des Basques et une soirée à Saint-Jean-de-Luz.",

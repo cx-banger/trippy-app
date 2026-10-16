@@ -15,7 +15,7 @@ const SCREENS = [
   { path: 'savings', label: 'Portefeuille' },
   { path: 'messages', label: 'Messages' },
   { path: 'chat/paysbasque', label: 'Groupe : sondage + fichiers' },
-  { path: 'trip/marseille', label: 'Réservation' },
+  { path: 'ticket/marseille', label: 'Mon voyage : billet + itinéraire' },
 ]
 
 const SIZES = { Petit: 0.62, Moyen: 0.78, 'Taille réelle': 1 } as const

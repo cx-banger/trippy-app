@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import QRCode from 'qrcode'
-import { ChevronLeft, ExternalLink, TrendingDown, TrendingUp, Info, Leaf, PiggyBank, Plus, Ticket, Trash2, Users, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ExternalLink, TrendingDown, TrendingUp, Info, Leaf, PiggyBank, Plus, Ticket, Trash2, Users, X } from 'lucide-react'
 import { GOAL_COLORS, SAVING_TIPS, TRIPS, type Goal, type Tip, type Trip } from '../data'
 import { useStore } from '../store'
 import { Screen, Sheet, TrainIcon, cx } from '../components/ui'
@@ -222,36 +222,42 @@ function TicketCard({ trip, people, from }: { trip: Trip; people: number; from: 
   const dark = trip.textOnColor === 'dark'
   return (
     <li className="overflow-hidden rounded-3xl bg-white shadow-sm dark:bg-card-dark">
-      <div className={cx('p-5', dark ? 'text-neutral-900' : 'text-white')} style={{ backgroundColor: trip.color }}>
-        <p className="text-xs font-semibold uppercase tracking-wider opacity-80">Voyage organisé · {trip.days} jours</p>
-        <h3 className="mt-1 text-xl font-semibold">{trip.name}</h3>
-        <div className="mt-4 flex items-center gap-3">
-          <span className="font-semibold">{from.split(',')[0]}</span>
-          <span className="flex flex-1 items-center gap-2 opacity-80">
-            <span className="h-px flex-1 border-t border-dashed border-current" />
-            <TrainIcon className="h-4 w-4" />
-            <span className="h-px flex-1 border-t border-dashed border-current" />
-          </span>
-          <span className="font-semibold">{trip.region}</span>
+      <Link to={`/ticket/${trip.id}`} className="block active:opacity-90">
+        <div className={cx('p-5', dark ? 'text-neutral-900' : 'text-white')} style={{ backgroundColor: trip.color }}>
+          <p className="text-xs font-semibold uppercase tracking-wider opacity-80">Voyage organisé · {trip.days} jours</p>
+          <h3 className="mt-1 text-xl font-semibold">{trip.name}</h3>
+          <div className="mt-4 flex items-center gap-3">
+            <span className="font-semibold">{from.split(',')[0]}</span>
+            <span className="flex flex-1 items-center gap-2 opacity-80">
+              <span className="h-px flex-1 border-t border-dashed border-current" />
+              <TrainIcon className="h-4 w-4" />
+              <span className="h-px flex-1 border-t border-dashed border-current" />
+            </span>
+            <span className="font-semibold">{trip.region}</span>
+          </div>
         </div>
-      </div>
-      <div className="relative flex items-center gap-4 p-5">
-        <span className="absolute -left-3 -top-3 h-6 w-6 rounded-full bg-page dark:bg-page-dark" />
-        <span className="absolute -right-3 -top-3 h-6 w-6 rounded-full bg-page dark:bg-page-dark" />
-        <div className="flex-1 space-y-1.5 text-sm">
-          <p className="flex items-center gap-2">
-            <TrainIcon className="h-4 w-4" /> {trip.tags.transport} · {trip.travelTime}
-          </p>
-          <p className="flex items-center gap-2">
-            <Users className="h-4 w-4" /> {people} voyageur{people > 1 ? 's' : ''} · {trip.bookPrice * people} €
-          </p>
-          <p className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
-            <Leaf className="h-4 w-4" /> {trip.tags.co2} par rapport à la voiture
-          </p>
-          <p className="pt-1 font-mono text-xs text-neutral-400">{code}</p>
+        <div className="relative flex items-center gap-4 p-5">
+          <span className="absolute -left-3 -top-3 h-6 w-6 rounded-full bg-page dark:bg-page-dark" />
+          <span className="absolute -right-3 -top-3 h-6 w-6 rounded-full bg-page dark:bg-page-dark" />
+          <div className="flex-1 space-y-1.5 text-sm">
+            <p className="flex items-center gap-2">
+              <TrainIcon className="h-4 w-4" /> {trip.tags.transport} · {trip.travelTime}
+            </p>
+            <p className="flex items-center gap-2">
+              <Users className="h-4 w-4" /> {people} voyageur{people > 1 ? 's' : ''} · {trip.bookPrice * people} €
+            </p>
+            <p className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+              <Leaf className="h-4 w-4" /> {trip.tags.co2} par rapport à la voiture
+            </p>
+            <p className="pt-1 font-mono text-xs text-neutral-400">{code}</p>
+          </div>
+          {qr && <img src={qr} alt="QR code du billet" className="h-24 w-24 rounded-lg bg-white p-1.5" />}
         </div>
-        {qr && <img src={qr} alt="QR code du billet" className="h-24 w-24 rounded-lg bg-white p-1.5" />}
-      </div>
+        <p className="flex items-center justify-between border-t border-neutral-100 px-5 py-3 text-sm font-semibold text-sky dark:border-white/10">
+          Voir mon voyage : itinéraire, carte, groupe
+          <ChevronRight className="h-4 w-4" />
+        </p>
+      </Link>
     </li>
   )
 }
