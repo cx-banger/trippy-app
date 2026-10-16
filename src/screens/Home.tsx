@@ -6,7 +6,6 @@ import { useStore } from '../store'
 import { CategoryChips, EmptyState, Screen, SearchField, Sheet, cx } from '../components/ui'
 import { Picto } from '../components/Picto'
 import traveler from '../assets/illustrations/traveler.svg'
-import francilien from '../assets/illustrations/francilien.svg'
 import CreditsSheet from '../components/Credits'
 
 export default function Home() {
@@ -180,7 +179,7 @@ function TripCard({
           <p className={cx('text-xs uppercase', light ? 'text-white/90' : 'text-neutral-600')}>{trip.members} membres</p>
           <h2 className="mt-3 flex items-center gap-2.5 font-display text-base font-semibold uppercase leading-tight">
             <span>{trip.shortName}</span>
-            <img src={francilien} alt="" className="h-4 w-auto shrink-0 -scale-x-100 drop-shadow-sm" />
+            <Picto name="tgv" className="h-5 w-9" />
           </h2>
         </button>
         <div className="flex shrink-0 flex-col items-end gap-2.5">

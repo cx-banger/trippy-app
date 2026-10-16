@@ -30,6 +30,7 @@ export type PictoName =
   | 'plane'
   | 'shield'
   | 'train'
+  | 'tgv'
 
 export function Picto({ name, className = 'h-5 w-5', style }: { name: PictoName; className?: string; style?: CSSProperties }) {
   const mask = `url("${urls[name]}") center / contain no-repeat`
