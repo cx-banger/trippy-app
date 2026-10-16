@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Bell, ChevronDown, Heart, MapPin, Moon, Play, Sun, TrendingUp, X } from 'lucide-react'
+import { ChevronDown, Heart, MapPin, Moon, Play, Sun, TrendingUp, X } from 'lucide-react'
 import { CITIES, TRIPS, type CategoryFilter, type Trip } from '../data'
 import { useStore } from '../store'
-import { CategoryChips, Screen, SearchField, Sheet, TrainIcon, cx } from '../components/ui'
+import { CategoryChips, EmptyState, Screen, SearchField, Sheet, TrainIcon, cx } from '../components/ui'
+import { Picto } from '../components/Picto'
+import traveler from '../assets/illustrations/traveler.svg'
 import CreditsSheet from '../components/Credits'
 
 export default function Home() {
@@ -52,7 +54,7 @@ export default function Home() {
               }}
               className="relative p-1"
             >
-              <Bell className="h-6 w-6" />
+              <Picto name="bell" className="h-6 w-6" />
               {!state.readNotifications && <span className="absolute right-0.5 top-0.5 h-2 w-2 rounded-full bg-tomato" />}
             </button>
           </div>
@@ -73,7 +75,7 @@ export default function Home() {
       </div>
 
       <section className="mt-8 px-5">
-        {trips.length === 0 && <p className="py-16 text-center text-neutral-500">Aucun voyage ne correspond à ta recherche.</p>}
+        {trips.length === 0 && <EmptyState illustration={traveler}>Aucun voyage ne correspond à ta recherche.</EmptyState>}
         {trips.map((trip, i) => (
           <TripCard
             key={trip.id}
@@ -177,7 +179,7 @@ function TripCard({
           <p className={cx('text-xs uppercase', light ? 'text-white/90' : 'text-neutral-600')}>{trip.members} membres</p>
           <h2 className="mt-3 flex items-center gap-2.5 font-display text-base font-semibold uppercase leading-tight">
             <span>{trip.shortName}</span>
-            <TrainIcon className="h-3 w-8 shrink-0" />
+            <TrainIcon className="h-5 w-5" />
           </h2>
         </button>
         <div className="flex shrink-0 flex-col items-end gap-2.5">

@@ -1,9 +1,10 @@
 import { useState, type ReactNode } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowLeft, BadgeCheck, Check, EyeOff, Globe, Link2, Lock, Plus, Radio, Shield, SquarePen, Users } from 'lucide-react'
+import { ArrowLeft, BadgeCheck, Check, EyeOff, Globe, Link2, Lock, Plus, Radio, SquarePen, Users } from 'lucide-react'
 import { BRANDS, CHANNEL_FILTERS, CONTACTS, KIND_LABEL, ME, TRIPS, conversationAvatar, conversationName, type Conversation } from '../data'
 import { useStore } from '../store'
 import { Screen, SearchField, Sheet, cx, useToast } from '../components/ui'
+import { Picto } from '../components/Picto'
 
 const TABS = ['Discussions', 'Groupes', 'Chaînes'] as const
 type Tab = (typeof TABS)[number]
@@ -171,7 +172,7 @@ export default function Messages() {
             {brands.length === 0 && <Empty>Aucune chaîne trouvée.</Empty>}
           </ul>
           <p className="mx-5 mt-4 rounded-2xl bg-white p-4 text-sm text-neutral-600 dark:bg-card-dark dark:text-neutral-300">
-            <Shield className="mb-1 h-5 w-5 text-teal" />
+            <Picto name="shield" className="mb-1 h-5 w-5 text-teal" />
             Les chaînes officielles sont tenues par des offices de tourisme, des guides certifiés et des établissements partenaires vérifiés par Trippy.
           </p>
         </>
@@ -180,7 +181,7 @@ export default function Messages() {
       <Sheet open={sheet === 'menu'} onClose={() => setSheet(null)}>
         <div className="space-y-2 pb-2">
           <MenuItem icon={<Users className="h-5 w-5" />} title="Nouveau groupe de voyage" body="Organise un trip avec tes amis Trippy" onClick={() => setSheet('group')} />
-          <MenuItem icon={<Radio className="h-5 w-5" />} title="Nouvelle chaîne" body="Partage tes conseils, en public ou en privé" onClick={() => setSheet('channel')} />
+          <MenuItem icon={<Picto name="chat" className="h-5 w-5" />} title="Nouvelle chaîne" body="Partage tes conseils, en public ou en privé" onClick={() => setSheet('channel')} />
           <MenuItem
             icon={<Link2 className="h-5 w-5" />}
             title="Inviter un ami sur Trippy"
@@ -390,7 +391,7 @@ function NewChannelSheet({ open, onClose }: { open: boolean; onClose: () => void
   return (
     <Sheet open={open} onClose={onClose}>
       <div className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-teal">
-        <Radio className="h-12 w-12 rounded-full bg-white/95 p-2 text-teal" strokeWidth={2.4} />
+        <Picto name="chat" className="h-10 w-10 text-white" />
       </div>
       <h2 className="mt-4 text-center font-display text-2xl font-semibold">Créer une chaîne</h2>
       <form

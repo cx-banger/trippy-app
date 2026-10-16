@@ -1,7 +1,10 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import QRCode from 'qrcode'
-import { BatteryFull, Moon, RotateCw, Signal, Smartphone, Sun, Wifi } from 'lucide-react'
+import { BatteryFull, Moon, RotateCw, Signal, Sun, Wifi } from 'lucide-react'
 import { cx } from './components/ui'
+import { Picto } from './components/Picto'
+import train from './assets/illustrations/train.svg'
+import travelers from './assets/illustrations/travelers.svg'
 
 // Screens shown side by side on desktop; each one is the real app running in an iframe.
 const SCREENS = [
@@ -84,17 +87,19 @@ export default function DesktopPreview() {
         </div>
       </header>
 
-      <section className="mt-6 flex items-center gap-5 rounded-2xl bg-[#262626] p-4">
+      <section className="relative mt-6 flex items-center gap-5 overflow-hidden rounded-2xl bg-[#262626] p-4 pb-7">
         {qr && <img src={qr} alt="QR code vers l'appli" className="h-24 w-24 rounded-lg" />}
         <div>
           <p className="flex items-center gap-2 font-display text-lg font-semibold">
-            <Smartphone className="h-5 w-5 text-sun" /> Trippy est une appli mobile
+            <Picto name="phone" className="h-5 w-5 text-sun" /> Trippy est une appli mobile
           </p>
           <p className="mt-1 text-sm text-neutral-400">
             Scanne le QR code avec ton téléphone, ou ouvre <span className="text-white">{appUrl.replace(/^https?:\/\//, '')}</span>, puis « Ajouter à l'écran
             d'accueil » pour l'installer.
           </p>
         </div>
+        <img src={travelers} alt="" className="ml-auto hidden h-24 w-auto shrink-0 xl:block" />
+        <img src={train} alt="" className="animate-train pointer-events-none absolute bottom-0 left-0 h-5 w-auto" />
       </section>
 
       <div className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-10">

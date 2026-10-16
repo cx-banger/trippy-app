@@ -105,3 +105,23 @@ body {
 .animate-fade-in {
   animation: fade-in 200ms ease-out;
 }
+
+/* SNCF train crossing the banner of the desktop preview */
+@keyframes train-run {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100vw);
+  }
+}
+.animate-train {
+  animation: train-run 16s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-train {
+    animation: none;
+    left: auto;
+    right: 1rem;
+  }
+}

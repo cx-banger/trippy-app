@@ -27,7 +27,7 @@ export type Trip = {
   tags: { transport: string; co2: string; group: string } // low-carbon travel first
   teaser: string
   intro: string
-  facilities: { icon: 'wifi' | 'dinner' | 'tub' | 'pool'; label: string }[]
+  facilities: { icon: 'heater' | 'dinner' | 'parking' | 'bike' | 'luggage' | 'accessible'; label: string }[] // SNCF pictograms
 }
 
 export const TRIPS: Trip[] = [
@@ -54,9 +54,9 @@ export const TRIPS: Trip[] = [
     intro:
       "Deux jours entre plage et massif de la Clape. On partage la location, les repas et les sorties paddle. Idéal pour un premier voyage avec le groupe : peu de route, beaucoup de soleil et des couchers de soleil sur les étangs.",
     facilities: [
-      { icon: 'wifi', label: 'Wi-Fi' },
+      { icon: 'bike', label: 'Vélos' },
       { icon: 'dinner', label: 'Dinner' },
-      { icon: 'pool', label: 'Beach' },
+      { icon: 'parking', label: 'Parking' },
     ],
   },
   {
@@ -82,9 +82,10 @@ export const TRIPS: Trip[] = [
     intro:
       "Trois jours pour découvrir Marseille depuis le Vieux-Port : le Panier, les calanques en bateau et Notre-Dame-de-la-Garde au coucher du soleil. Hébergement en appartement partagé à deux pas du port.",
     facilities: [
-      { icon: 'wifi', label: '1 Heater' },
+      { icon: 'heater', label: '1 Heater' },
       { icon: 'dinner', label: 'Dinner' },
-      { icon: 'tub', label: '1 Tub' },
+      { icon: 'luggage', label: 'Bagagerie' },
+      { icon: 'accessible', label: 'Accès PMR' },
     ],
   },
   {
@@ -110,10 +111,10 @@ export const TRIPS: Trip[] = [
     intro:
       "Cinq jours au Pays basque, en auberge de jeunesse et en groupe. Le séjour inclut le phare, le Rocher de la Vierge, une journée surf à la Côte des Basques et une soirée à Saint-Jean-de-Luz.",
     facilities: [
-      { icon: 'wifi', label: '1 Heater' },
+      { icon: 'heater', label: '1 Heater' },
       { icon: 'dinner', label: 'Dinner' },
-      { icon: 'tub', label: '1 Tub' },
-      { icon: 'pool', label: 'Pool' },
+      { icon: 'parking', label: 'Parking' },
+      { icon: 'bike', label: 'Vélos' },
     ],
   },
 ]

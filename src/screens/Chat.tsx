@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, BadgeCheck, ChartColumn, CheckCheck, FileSpreadsheet, FileText, FileType2, Info, Lightbulb, Lock, Paperclip, Pin, Plus, Radio, SendHorizontal, Trash2, Users, X } from 'lucide-react'
+import { ArrowLeft, BadgeCheck, CheckCheck, FileSpreadsheet, FileText, FileType2, Info, Lightbulb, Lock, Paperclip, Pin, Plus, Radio, SendHorizontal, Trash2, Users, X } from 'lucide-react'
 import {
   AUTHOR_COLORS,
   BRANDS,
@@ -18,6 +18,7 @@ import {
 } from '../data'
 import { useStore } from '../store'
 import { Sheet, cx } from '../components/ui'
+import { Picto } from '../components/Picto'
 import { ContactPicker, MemberStack } from './Messages'
 
 export default function Chat() {
@@ -28,7 +29,7 @@ export default function Chat() {
   const [sheet, setSheet] = useState<null | 'attach' | 'poll' | 'info'>(null)
   const [openFile, setOpenFile] = useState<SharedFile | null>(null)
   const [hidePinned, setHidePinned] = useState(false)
-  const bottom = useRef<HTMLDivElement>(null)
+  const list = useRef<HTMLDivElement>(null)
   const fileInput = useRef<HTMLInputElement>(null)
 
   const convo = state.conversations.find((c) => c.id === id)
@@ -39,7 +40,8 @@ export default function Chat() {
   }, [id])
 
   useEffect(() => {
-    bottom.current?.scrollIntoView({ behavior: 'smooth' })
+    // scroll only the message list: scrollIntoView would also scroll the page around an embedding iframe
+    list.current?.scrollTo({ top: list.current.scrollHeight, behavior: 'smooth' })
   }, [convo?.messages.length])
 
   if (!convo) return <Navigate to="/messages" replace />
@@ -104,7 +106,7 @@ export default function Chat() {
         </div>
       )}
 
-      <div className="no-scrollbar flex-1 overflow-y-auto px-4 pb-4">
+      <div ref={list} className="no-scrollbar flex-1 overflow-y-auto px-4 pb-4">
         <p className="mx-auto mt-4 flex w-fit items-center gap-2 rounded-md border border-yellow-300 bg-yellow-100 px-3 py-1 text-[12px] text-neutral-800">
           <Lock className="h-3 w-3" fill="currentColor" /> Messages chiffrés de bout en bout
         </p>
@@ -133,7 +135,6 @@ export default function Chat() {
             )
           })}
         </ul>
-        <div ref={bottom} />
       </div>
 
       {canPost ? (
@@ -177,7 +178,7 @@ export default function Chat() {
       <Sheet open={sheet === 'attach'} onClose={() => setSheet(null)}>
         <div className="grid grid-cols-3 gap-3 pb-2">
           <AttachButton icon={<Paperclip className="h-6 w-6" />} label="Document" hint="PDF, Word, Excel" color="#1189B0" onClick={() => (setSheet(null), fileInput.current?.click())} />
-          {canPoll && <AttachButton icon={<ChartColumn className="h-6 w-6" />} label="Sondage" hint="Voter ensemble" color="#5A27F7" onClick={() => setSheet('poll')} />}
+          {canPoll && <AttachButton icon={<Picto name="chart" className="h-6 w-6" />} label="Sondage" hint="Voter ensemble" color="#5A27F7" onClick={() => setSheet('poll')} />}
           {convo.kind === 'group' && <AttachButton icon={<Users className="h-6 w-6" />} label="Membres" hint="Ajouter des amis" color="#E07A47" onClick={() => setSheet('info')} />}
         </div>
       </Sheet>
@@ -281,7 +282,7 @@ function MessageRow({
     body = (
       <div className="w-64 max-w-full">
         <p className="flex items-center gap-2 font-semibold">
-          <ChartColumn className="h-4 w-4 shrink-0" /> {poll.question}
+          <Picto name="chart" className="h-4 w-4" /> {poll.question}
         </p>
         <ul className="mt-2 space-y-2">
           {poll.options.map((o) => {

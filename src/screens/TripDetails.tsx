@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, Bath, ChevronDown, CircleCheck, Clock, History, Lock, Map as MapIcon, MapPin, Pencil, Play, Send, Star, Utensils, Waves, Wifi } from 'lucide-react'
-import { TRIPS, type CategoryFilter, type Trip } from '../data'
+import { ArrowLeft, ChevronDown, CircleCheck, History, Lock, MapPin, Pencil, Play, Send, Star } from 'lucide-react'
+import { TRIPS, type CategoryFilter } from '../data'
+import { Picto } from '../components/Picto'
 import { useStore } from '../store'
 import { CategoryChips, Screen, Sheet, TrainIcon, cx, useToast } from '../components/ui'
-
-const facilityIcon = { wifi: Wifi, dinner: Utensils, tub: Bath, pool: Waves } satisfies Record<Trip['facilities'][number]['icon'], unknown>
 
 export default function TripDetails() {
   const { id } = useParams()
@@ -36,7 +35,7 @@ export default function TripDetails() {
             <MapPin className="h-5 w-5 text-sky" />
             <span className="text-[13px]">{state.city}</span>
             <button onClick={() => setMapOpen(true)} aria-label="Carte" className="relative ml-1 text-neutral-900 dark:text-white">
-              <MapIcon className="h-6 w-6" fill="currentColor" stroke="white" strokeWidth={1.2} />
+              <Picto name="map" className="h-6 w-6" />
               <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-tomato" />
             </button>
           </div>
@@ -57,13 +56,13 @@ export default function TripDetails() {
             </div>
             <div className="no-scrollbar absolute inset-x-0 bottom-3 flex gap-2 overflow-x-auto px-4 text-white">
               <button onClick={() => setMapOpen(true)} className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/70 bg-white/10 px-3 py-1 text-sm backdrop-blur">
-                <MapIcon className="h-4 w-4" /> Map
+                <Picto name="map" className="h-4 w-4" /> Map
               </button>
               <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/70 bg-white/10 px-3 py-1 text-sm backdrop-blur">
-                <TrainIcon className="h-3 w-7" /> {trip.travelTime}
+                <TrainIcon className="h-4 w-4" /> {trip.travelTime}
               </span>
               <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/70 bg-white/10 px-3 py-1 text-sm backdrop-blur">
-                <Clock className="h-4 w-4" /> {trip.days} Days <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                <Picto name="clock" className="h-4 w-4" /> {trip.days} Days <span className="h-1.5 w-1.5 rounded-full bg-white" />
               </span>
             </div>
           </div>
@@ -101,15 +100,12 @@ export default function TripDetails() {
             <Lock className="h-5 w-5" fill="currentColor" />
           </div>
           <ul className="mt-5 grid grid-cols-4 gap-2.5">
-            {trip.facilities.map((f) => {
-              const Icon = facilityIcon[f.icon]
-              return (
-                <li key={f.label} className="flex aspect-[4/5] flex-col items-center justify-center gap-2 rounded-2xl bg-neutral-100 text-xs dark:bg-raised-dark">
-                  <Icon className="h-7 w-7" strokeWidth={1.6} />
-                  {f.label}
-                </li>
-              )
-            })}
+            {trip.facilities.map((f) => (
+              <li key={f.label} className="flex aspect-[4/5] flex-col items-center justify-center gap-2 rounded-2xl bg-neutral-100 text-xs dark:bg-raised-dark">
+                <Picto name={f.icon} className="h-8 w-8" />
+                {f.label}
+              </li>
+            ))}
           </ul>
         </section>
       </Screen>

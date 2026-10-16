@@ -205,7 +205,7 @@ function PostCard({ post }: { post: Post }) {
           </span>
           {post.transport && (
             <span className="flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200">
-              <TrainIcon className="h-2.5 w-6" /> {post.transport}
+              <TrainIcon className="h-3.5 w-3.5" /> {post.transport}
             </span>
           )}
           {post.budget && <span className="rounded-full bg-sun/40 px-2.5 py-1 text-neutral-900 dark:bg-sun/20 dark:text-sun">💶 {post.budget}</span>}

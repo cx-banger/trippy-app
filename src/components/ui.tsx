@@ -1,22 +1,26 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
-import { ChartColumn, Compass, House, Search, SlidersHorizontal, Wallet, X } from 'lucide-react'
+import { Search, SlidersHorizontal, X } from 'lucide-react'
 import { CATEGORIES, ME, type CategoryFilter } from '../data'
+import { Picto, type PictoName } from './Picto'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function cx(...classes: (string | false | null | undefined)[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-/** Speed-train glyph shown next to trip names. */
-export function TrainIcon({ className = 'h-5 w-11' }: { className?: string }) {
+/** Train pictogram (SNCF charter) shown next to trip names and travel times. */
+export function TrainIcon({ className = 'h-4 w-4' }: { className?: string }) {
+  return <Picto name="train" className={className} />
+}
+
+/** Empty list message with an SNCF-charter illustration. */
+export function EmptyState({ illustration, children }: { illustration: string; children: ReactNode }) {
   return (
-    <svg viewBox="0 0 44 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" className={className} aria-hidden>
-      <path d="M2 12h28c5 0 9-1.5 9-3.5S35 4 26 3.5C18 3 10 4 2 6" />
-      <path d="M2 16h36" />
-      <path d="M8 19h28" />
-      <path d="M22 7.5h8" />
-    </svg>
+    <div className="flex flex-col items-center px-6 py-10 text-center text-neutral-500">
+      <img src={illustration} alt="" className="mb-4 h-36 w-auto max-w-[80%] object-contain" />
+      <p className="max-w-xs text-[15px]">{children}</p>
+    </div>
   )
 }
 
@@ -43,18 +47,18 @@ export function Screen({ children, withNav = false, className }: { children: Rea
   )
 }
 
-const tabs = [
-  { to: '/', icon: House, label: 'Accueil' },
-  { to: '/savings', icon: Wallet, label: 'Portefeuille' },
-  { to: '/feed', icon: Compass, label: 'Feed' },
-  { to: '/discover', icon: ChartColumn, label: 'Découvrir' },
+const tabs: { to: string; icon: PictoName; label: string }[] = [
+  { to: '/', icon: 'house', label: 'Accueil' },
+  { to: '/savings', icon: 'piggy', label: 'Portefeuille' },
+  { to: '/feed', icon: 'compass', label: 'Feed' },
+  { to: '/discover', icon: 'chart', label: 'Découvrir' },
 ]
 
 export function BottomNav() {
   return (
     <nav className="absolute inset-x-0 bottom-0 z-30 rounded-t-[28px] bg-white/95 pb-[max(env(safe-area-inset-bottom),8px)] shadow-[0_-8px_24px_rgba(0,0,0,0.06)] backdrop-blur dark:bg-[#3a3b3c]/95">
       <ul className="flex items-center justify-around px-4 pt-3">
-        {tabs.map(({ to, icon: Icon, label }) => (
+        {tabs.map(({ to, icon, label }) => (
           <li key={to}>
             <NavLink
               to={to}
@@ -67,7 +71,7 @@ export function BottomNav() {
                 )
               }
             >
-              {({ isActive }) => <Icon className="h-6 w-6" strokeWidth={isActive ? 2.4 : 1.8} />}
+              <Picto name={icon} className="h-7 w-7" />
             </NavLink>
           </li>
         ))}

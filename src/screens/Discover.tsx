@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom'
 import { ArrowUpRight, History, Leaf, Users } from 'lucide-react'
 import { TRIPS, type Trip } from '../data'
 import { useStore } from '../store'
-import { Screen, SearchField, TrainIcon, cx } from '../components/ui'
+import { EmptyState as Empty, Screen, SearchField, TrainIcon, cx } from '../components/ui'
+import traveler from '../assets/illustrations/traveler.svg'
+import calendar from '../assets/illustrations/calendar.svg'
+import travelers from '../assets/illustrations/travelers.svg'
 
 const TABS = ['Discover', 'Saved', 'Applied', 'Closed'] as const
 type Tab = (typeof TABS)[number]
@@ -81,7 +84,8 @@ function EmptyState({ tab }: { tab: Tab }) {
     Applied: 'Tu n’as encore rien réservé. Ouvre une offre et appuie sur « Book Now ».',
     Closed: 'Aucune offre clôturée.',
   }
-  return <p className="py-16 text-center text-neutral-500">{text[tab]}</p>
+  const art: Record<Tab, string> = { Discover: travelers, Saved: traveler, Applied: calendar, Closed: travelers }
+  return <Empty illustration={art[tab]}>{text[tab]}</Empty>
 }
 
 function OfferCard({ trip }: { trip: Trip }) {
@@ -108,7 +112,7 @@ function OfferCard({ trip }: { trip: Trip }) {
           </div>
           <div className="no-scrollbar mt-4 flex gap-1.5 overflow-x-auto">
             {[
-              { icon: <TrainIcon className="h-3 w-7" />, label: trip.tags.transport },
+              { icon: <TrainIcon className="h-4 w-4" />, label: trip.tags.transport },
               { icon: <Leaf className="h-4 w-4" />, label: trip.tags.co2 },
               { icon: <Users className="h-4 w-4" />, label: trip.tags.group },
             ].map(({ icon, label }) => (

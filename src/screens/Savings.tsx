@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import QRCode from 'qrcode'
-import { ChevronLeft, ExternalLink, Hand, House, Info, Leaf, Navigation, PiggyBank, Plus, Ticket, Trash2, Users, X } from 'lucide-react'
+import { ChevronLeft, ExternalLink, Info, Leaf, PiggyBank, Plus, Ticket, Trash2, Users, X } from 'lucide-react'
 import { GOAL_COLORS, SAVING_TIPS, TRIPS, type Goal, type Tip, type Trip } from '../data'
 import { useStore } from '../store'
 import { Screen, Sheet, TrainIcon, cx } from '../components/ui'
+import { Picto, type PictoName } from '../components/Picto'
 
 const euro = (n: number) => `${n.toLocaleString('fr-FR', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 })} €`
-const goalIcon = { hand: Hand, plane: Navigation, home: House } satisfies Record<Goal['icon'], unknown>
+const goalIcon = { hand: 'football', plane: 'plane', home: 'house' } as const satisfies Record<Goal['icon'], PictoName>
 
 const TABS = ['Épargne', 'Billets', 'Astuces'] as const
 type Tab = (typeof TABS)[number]
@@ -107,7 +108,6 @@ function GoalCard({ goal, first, last, open, onToggle }: { goal: Goal; first: bo
   const pct = Math.min(100, Math.round((goal.saved / goal.target) * 100))
   const { weeks, left, perWeek } = plan(goal)
   const light = goal.text === 'light'
-  const Icon = goalIcon[goal.icon]
   const trip = TRIPS.find((t) => t.id === goal.tripId)
   const chip = cx('rounded-full px-3 py-1.5 text-sm font-semibold', light ? 'bg-white/20' : 'bg-black/10')
   const value = Number(amount.replace(',', '.'))
@@ -117,7 +117,7 @@ function GoalCard({ goal, first, last, open, onToggle }: { goal: Goal; first: bo
       className={cx('relative overflow-hidden px-5 pb-5 pt-5', first ? 'rounded-t-3xl' : '-mt-3 rounded-t-3xl', last && 'rounded-b-3xl', light ? 'text-white' : 'text-neutral-900')}
       style={{ backgroundColor: goal.color }}
     >
-      <Icon className="pointer-events-none absolute -right-3 -top-2 h-28 w-28 rotate-12 opacity-20" strokeWidth={2.4} color="#000" />
+      <Picto name={goalIcon[goal.icon]} className="pointer-events-none absolute -right-3 -top-2 h-28 w-28 rotate-12 text-black opacity-20" />
       <div className="relative flex items-center gap-2">
         <h2 className="text-xl font-semibold">{goal.name}</h2>
         {trip && <span className={chip.replace('py-1.5', 'py-0.5').replace('text-sm', 'text-xs')}>{trip.shortName}</span>}
@@ -225,7 +225,7 @@ function TicketCard({ trip, people, from }: { trip: Trip; people: number; from: 
           <span className="font-semibold">{from.split(',')[0]}</span>
           <span className="flex flex-1 items-center gap-2 opacity-80">
             <span className="h-px flex-1 border-t border-dashed border-current" />
-            <TrainIcon className="h-3 w-7" />
+            <TrainIcon className="h-4 w-4" />
             <span className="h-px flex-1 border-t border-dashed border-current" />
           </span>
           <span className="font-semibold">{trip.region}</span>
@@ -236,7 +236,7 @@ function TicketCard({ trip, people, from }: { trip: Trip; people: number; from: 
         <span className="absolute -right-3 -top-3 h-6 w-6 rounded-full bg-page dark:bg-page-dark" />
         <div className="flex-1 space-y-1.5 text-sm">
           <p className="flex items-center gap-2">
-            <TrainIcon className="h-3 w-7" /> {trip.tags.transport} · {trip.travelTime}
+            <TrainIcon className="h-4 w-4" /> {trip.tags.transport} · {trip.travelTime}
           </p>
           <p className="flex items-center gap-2">
             <Users className="h-4 w-4" /> {people} voyageur{people > 1 ? 's' : ''} · {trip.bookPrice * people} €
